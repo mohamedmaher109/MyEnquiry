@@ -1,0 +1,69 @@
+﻿@model   MyEnquiry_BussniessLayer.ViewModels.ListCompanyVm
+
+@using MyEnquiry.Helper
+<table class="table datatables" id="dataTable-3">
+    <thead>
+        <tr>
+            <th>اسم المستخدم</th>
+            <th>نوع المستخدم</th>
+            <th>عدد الحالات</th>
+            <th>سعر الحاله</th>
+            <th> الإجمالي</th>
+            <th> رقم فودافون كاش</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GeCompanyVms1)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.title</td>
+            <td>@item.NoOfCount</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.NumberOfCash</td>
+            
+            <td>               
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary">الدفع</button>
+            </td>
+           
+        </tr>
+        }  
+        @foreach (var item in Model.GeCompanyVms2)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.title</td>
+            <td>@item.NoOfCount</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.NumberOfCash</td>
+            
+            <td>               
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary">الدفع</button>
+            </td>
+           
+        </tr>
+        }    
+        @foreach (var item in Model.GeCompanyVms3)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.title</td>
+            <td>@item.NoOfCount</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.NumberOfCash</td>
+            
+            <td>               
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary">الدفع</button>
+            </td>
+           
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

@@ -1,0 +1,336 @@
+﻿@model MyEnquiry_BussniessLayer.ViewModels.SurveyFormElementVm
+
+@{
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+	ViewData["Title"] = "تعديل عنصر";
+}
+
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<a href="@Url.Action("Index", "SurveyElements", new { surveyId = Model.SurveyFormId })" class="btn btn-outline-primary">عرض جميع العناصر</a>
+<hr />
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card shadow mb-4">
+						<div class="card-body">
+							@using (Html.BeginForm("Edit", "SurveyElements", new { area = "" }, FormMethod.Post, true, new { @id = "formadd" }))
+							{
+								<input hidden value="@Model.Id" name="Id" />
+								<input hidden value="@Model.SurveyFormId" name="SurveyFormId" />
+								<div class="form-group">
+									@Html.LabelFor(e => e.Label, "اسم العنصر*", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.Label, new { @class = "form-control req", @type = "text", required = true })
+								</div>
+								<hr />
+								<div class="form-group">
+									@Html.LabelFor(e => e.Notes, "ملاحظات", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.Notes, new { @class = "form-control", @type = "text" })
+								</div>
+								<hr />
+								<div class="form-group">
+									@Html.LabelFor(e => e.IsRequired, "هل العنصر مطلوب؟", new { @class = "font-weight-bold" })
+									<br />
+									@Html.CheckBoxFor(e => e.IsRequired)
+									@Html.LabelFor(e => e.IsRequired, "نعم")
+								</div>
+								<hr />
+								<div class="form-group">
+									<label class="font-weight-bold">نوع العنصر*</label>
+									@Html.HiddenFor(e => e.IsCheckbox)
+									@Html.HiddenFor(e => e.IsDate)
+									@Html.HiddenFor(e => e.IsFile)
+									@Html.HiddenFor(e => e.IsCamira)
+									@Html.HiddenFor(e => e.IsRadioButton)
+									@Html.HiddenFor(e => e.IsSelect)
+									@Html.HiddenFor(e => e.IsTextarea)
+									@Html.HiddenFor(e => e.IsTextbox)
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-Textbox" value="@Model.IsTextbox" checked="@Model.IsTextbox" />
+									<label for="type-Textbox">نص صغير (Textbox)</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-Textarea" value="@Model.IsTextarea" checked="@Model.IsTextarea" />
+									<label for="type-Textarea">نص كبير (Textarea)</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-RadioButton" value="@Model.IsRadioButton" checked="@Model.IsRadioButton" />
+									<label for="type-RadioButton">Radio Button</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-Select" value="@Model.IsSelect" checked="@Model.IsSelect" />
+									<label for="type-Select">اختيار من متعدد</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-File" value="@Model.IsFile" checked="@(Model.IsCamira ? "false" : Model.IsFile)" />
+									<label for="type-File">اختيار ملف</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-Camera" value="@Model.IsCamira" checked="@Model.IsCamira" />
+									<label for="type-Camera">تصوير كاميرا</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-Date" value="@Model.IsDate" checked="@Model.IsDate" />
+									<label for="type-Date">اختيار تاريخ</label>
+									<br>
+									<input type="radio" name="ElementType" class="ElementType" id="type-Checkbox" value="@Model.IsCheckbox" checked="@Model.IsCheckbox" />
+									<label for="type-Checkbox">خانه إختيار (Checkbox)</label>
+									<br>
+								</div>
+
+								<div class="form-group CheckBoxData" hidden>
+									<hr />
+									@Html.LabelFor(e => e.CheckBoxText, "النص الخاص بخانه الإختيار* (Checkbox)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.CheckBoxText, new { @class = "form-control", @type = "text" })
+								</div>
+
+								<div class="form-group TextboxData">
+									<hr />
+									@Html.LabelFor(e => e.TextboxMinLength, "أقل عدد من الحروف فى النص (Textbox) (إختيارى)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.TextboxMinLength, new { @class = "form-control", @type = "number", min = 1 })
+									<br />
+									@Html.LabelFor(e => e.TextboxMaxLength, "أقصى عدد من الحروف فى النص (Textbox) (إختيارى)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.TextboxMaxLength, new { @class = "form-control", @type = "number", min = 1 })
+									<br />
+									<p class="font-weight-bold text-danger">برجاء اختيار إجابة واحده فقط من التالى ، او عدم الاختيار وسيتم إعتبار النص حراً بدون قيود</p>
+									@Html.LabelFor(e => e.IsTextboxEmail, "هل النص بريد إلكترونى؟", new { @class = "font-weight-bold" })
+									<br />
+									@Html.CheckBoxFor(e => e.IsTextboxEmail)
+									@Html.LabelFor(e => e.IsTextboxEmail, "نعم")
+									<br />
+									@Html.LabelFor(e => e.IsTextboxPassword, "هل النص كلمة سر؟", new { @class = "font-weight-bold" })
+									<br />
+									@Html.CheckBoxFor(e => e.IsTextboxPassword)
+									@Html.LabelFor(e => e.IsTextboxPassword, "نعم")
+									<br />
+									@Html.LabelFor(e => e.IsTextboxNumber, "هل النص أرقام فقط؟", new { @class = "font-weight-bold" })
+									<br />
+									@Html.CheckBoxFor(e => e.IsTextboxNumber)
+									@Html.LabelFor(e => e.IsTextboxNumber, "نعم")
+								</div>
+
+								<div class="form-group TextAreaData" hidden>
+									<hr />
+									@Html.LabelFor(e => e.TextareaMinLength, "أقل عدد من الحروف فى النص كبير (Textarea) (إختيارى)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.TextareaMinLength, new { @class = "form-control", @type = "number", min = 1 })
+									<br />
+									@Html.LabelFor(e => e.TextareaMaxLength, "اقصى عدد من الحروف فى النص كبير (Textarea) (إختيارى)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.TextareaMaxLength, new { @class = "form-control", @type = "number", min = 1 })
+								</div>
+
+								<div class="form-group FileData" hidden>
+									<hr />
+									@Html.LabelFor(e => e.FileNumberOfMinimumFilesAllowed, "أقل عدد من الملفات (إختيارى)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.FileNumberOfMinimumFilesAllowed, new { @class = "form-control", @type = "number", min = 1 })
+									<br />
+									@Html.LabelFor(e => e.FileNumberOfMaximumFilesAllowed, "اقصى عدد من الملفات (إختيارى)", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.FileNumberOfMaximumFilesAllowed, new { @class = "form-control", @type = "number", min = 1 })
+									<div class="ExtensionsData">
+										<br />
+										<p class="font-weight-bold text-danger">يمكنك تحديد امتدادات الملف المرفوع ، برجاء كتابه الامتدادات المطلوب مفصوله بعلامه النقطتان : كما فى المثال التالى</p>
+										<p class="font-weight-bold text-primary">jpg:png:pdf:docx</p>
+										<p class="font-weight-bold text-danger">فى هذا المثال سيتم السماح للملفات من نوع jpg أو png أو pdf أو docx فقط</p>
+										@Html.LabelFor(e => e.FileAcceptedFileExtensions, "الامتدادات المتاحه للملف (إختيارى)", new { @class = "font-weight-bold" })
+										@Html.TextBoxFor(e => e.FileAcceptedFileExtensions, new { @class = "form-control", @type = "text", placeholder = "مثال: jpg:png:pdf:docx" })
+									</div>
+								</div>
+
+								<div class="form-group RadioButtonData" hidden>
+									<hr />
+									<p class="font-weight-bold text-danger">لإضافة الخيارات المتاحة للعنصر Radio button ، برجاء كتابة الإختيارات مفصوله بعلامه النقطتان : كما فى المثال التالى</p>
+									<p class="font-weight-bold text-primary">نعم : لا : من الممكن</p>
+									<p class="font-weight-bold text-danger">فى هذا المثال سيتم عرض الاختيارات للمستخدم فى هيئة Radio button بالاختيارات التاليه (نعم ، لا ، من الممكن)</p>
+									<div class="row mb-2">
+										<div class="col-3">
+											<input type="radio" name="testRadioButton" checked id="yes" />
+											<label for="yes">نعم</label>
+
+											<input type="radio" name="testRadioButton" id="no" />
+											<label for="no">لا</label>
+
+											<input type="radio" name="testRadioButton" id="maybe" />
+											<label for="maybe">من الممكن</label>
+										</div>
+									</div>
+									@Html.LabelFor(e => e.RadioButtonOptions, "خيارات الـ Radio button", new { @class = "font -weight-bold" })
+									@Html.TextBoxFor(e => e.RadioButtonOptions, new { @class = "form-control", @type = "text", placeholder = "مثال: نعم : لا : من الممكن" })
+								</div>
+
+								<div class="form-group SelectData" hidden>
+									<hr />
+									<p class="font-weight-bold text-danger">لإضافة الخيارات المتاحة للعنصر اختيار من متعدد ، برجاء كتابة الإختيارات مفصوله بعلامه النقطتان : كما فى المثال التالى</p>
+									<p class="font-weight-bold text-primary">نعم : لا : من الممكن</p>
+									<p class="font-weight-bold text-danger">فى هذا المثال سيتم عرض الاختيارات للمستخدم فى هيئة اختيار من متعدد مثل التالى</p>
+									<div class="row mb-2">
+										<div class="col-3">
+											<select class="form-control">
+												<option>اختر</option>
+												<option>نعم</option>
+												<option>لا</option>
+												<option>من الممكن</option>
+											</select>
+										</div>
+									</div>
+									@Html.LabelFor(e => e.SelectOptions, "خيارات الاختيار من متعدد", new { @class = "font - weight - bold" })
+									@Html.TextBoxFor(e => e.SelectOptions, "", new { @class = "form-control", @type = "text", placeholder = "مثال: نعم : لا: من الممكن" })
+								</div>
+
+								<div class="form-group">
+									<hr />
+									@Html.LabelFor(e => e.Order, "ترتيب العنصر فى العرض*", new { @class = "font-weight-bold" })
+									@Html.TextBoxFor(e => e.Order, new { @class = "form-control req", @type = "number", min = 1, required = true })
+								</div>
+
+								<button type="submit" id="btn-submit" class="btn btn-primary">تعديل</button>
+							}
+						</div> <!-- /. card-body -->
+					</div> <!-- /. card -->
+				</div> <!-- /. col -->
+			</div> <!-- /. end-section -->
+
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+	<script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+	<script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+	<script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+	<script>
+		$(document).on("change", ".ElementType", function () {
+			$("#IsCheckbox").val('false');
+			$(".CheckBoxData").hide();
+			$("#CheckBoxText").removeAttr('required');
+
+			$("#IsDate").val('false');
+
+			$("#IsFile").val('false');
+			$(".FileData").hide();
+			$(".ExtensionsData").hide();
+
+			$("#IsRadioButton").val('false');
+			$(".RadioButtonData").hide();
+			$("#RadioButtonOptions").removeAttr('required');
+
+			$("#IsSelect").val('false');
+			$(".SelectData").hide();
+			$("#SelectOptions").removeAttr('required');
+
+			$("#IsTextarea").val('false');
+			$(".TextAreaData").hide();
+
+			$(".TextboxData").hide();
+			$("#IsTextbox").val('false');
+
+			var id = $(this).attr('id');
+			switch (id) {
+				case 'type-Textbox':
+					$("#IsTextbox").val('true');
+					$(".TextboxData").show();
+					break;
+				case 'type-Textarea':
+					$("#IsTextarea").val('true');
+					$(".TextAreaData").removeAttr('hidden');
+					$(".TextAreaData").show();
+					break;
+				case 'type-RadioButton':
+					$("#IsRadioButton").val('true');
+					$(".RadioButtonData").removeAttr('hidden');
+					$(".RadioButtonData").show();
+					$("#RadioButtonOptions").attr('required', 'true');
+					break;
+				case 'type-Select':
+					$("#IsSelect").val('true');
+					$(".SelectData").removeAttr('hidden');
+					$(".SelectData").show();
+					$("#SelectOptions").attr('required', 'true');
+					break;
+				case 'type-File':
+					$("#IsFile").val('true');
+					$(".FileData").removeAttr('hidden');
+					$(".FileData").show();
+					$(".ExtensionsData").removeAttr('hidden');
+					$(".ExtensionsData").show();
+					break;
+				case 'type-Camera':
+					$("#IsFile").val('true');
+					$("#IsCamira").val('true');
+					$(".FileData").removeAttr('hidden');
+					$(".FileData").show();
+					break;
+				case 'type-Date':
+					$("#IsDate").val('true');
+					break;
+				case 'type-Checkbox':
+					$("#IsCheckbox").val('true');
+					$(".CheckBoxData").removeAttr('hidden');
+					$(".CheckBoxData").show();
+					$("#CheckBoxText").attr('required', 'true');
+					break;
+				default:
+			}
+
+		});
+
+		$(document).ready(function () {
+			$("#formadd").ajaxForm({
+				beforeSubmit: function (e) {
+					var isValid = true;
+					$(".req").each(function () {
+						var element = $(this);
+						if (element.val() == "") {
+							isValid = false;
+						}
+					});
+
+					if (isValid == false) {
+						swal({
+							title: "تعديل العنصر",
+							text: "يجب ادخال البيانات المطلوبة",
+							type: "warning"
+						});
+						return false;
+					}
+					delay(2000).then(() => window.location.reload());
+					$("#btn-submit").attr('disabled', 'true');
+				}
+				,
+
+				success: function (res, status, xhr, form) {
+					swal({
+						title: "تعديل العنصر",
+						text: res.msg,
+						type: "success"
+					});
+					$("#btn-submit").removeAttr('disabled');
+				},
+				error: function (res) {
+					try {
+						swal({
+							title: "خطأ",
+							text: res.responseJSON.message,
+							type: "error"
+						});
+					} catch (e) {
+						swal({
+							title: "خطأ",
+							text: "برجاء المحاولة مرة اخرى",
+							type: "error"
+						});
+					}
+					$("#btn-submit").removeAttr('disabled');
+				}
+			})
+
+			var selectedId = $('input[type=radio][name=ElementType]:checked').attr('id');
+			$("#" + selectedId).trigger('change');
+		})
+
+		function delay(time) {
+			return new Promise(resolve => setTimeout(resolve, time));
+		}
+	</script>
+}

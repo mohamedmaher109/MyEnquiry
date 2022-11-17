@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+@{
+    ViewData["Title"] = "الصلاحيات";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var roles = (List<RoleView>)ViewBag.Roles;
+
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/select2.css">
+<link href="~/css/jsTree/style.min.css" rel="stylesheet">
+<style>
+    .jstree-open > .jstree-anchor > .fa-folder:before {
+        content: "\f07c";
+    }
+
+    .jstree-default .jstree-icon.none {
+        width: 0;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-12">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">إضافة الصلاحيات</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group ">
+                                <label for="simple-select2">المجموعات</label>
+                                <select name="RoleId" class="form-control select2 req RoleId" id="simple-select2" width="100">
+                                    <option value="">اختر المجموعه</option>
+                                    @foreach (var item in roles)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div> <!-- form-group -->
+
+                            <div class="col-lg-12 displaytree">
+
+
+
+
+                            </div>
+                            <div class="m-5 text-center">
+                                <button type="button" onclick="submitMe()" class="btn btn-primary">حفظ التغييرات</button>
+                            </div>
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+    <script src="~/js/jsTree/jstree.min.js"></script>
+
+    <script src="~/js/cutompages/permissions.js"></script>
+
+
+}

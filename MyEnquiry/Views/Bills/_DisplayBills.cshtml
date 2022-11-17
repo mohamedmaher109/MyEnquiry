@@ -1,0 +1,524 @@
+﻿@model   MyEnquiry_BussniessLayer.ViewModels.MonthVm
+
+@using MyEnquiry.Helper
+    <div style="color: black; font-size:20px;">تحيه طيبه وبعد </div>
+   <input name="Id" value=@(ViewBag.id) hidden id="Vale">
+<table class="table table-bordered" id="dataTable-">
+      @if(Model.Jan !=null&&Model.Jan.Count()!=0)
+        {
+           
+    <thead>
+       
+        <tr><th colspan="3" style="color: black; font-size:20px;">      فاتورة شهر يناير  @Model.Jan.LastOrDefault().DonefromReviewr.Year</th>
+       <th style="color: black;" colspan="4"> <button onclick="Pay(1)"  style="float: left;"> تم الدفع </button></th>
+           </tr>
+        <tr>
+
+            <th style=" color:white;font-size:20px;background-color:green;">المحافظه</th>
+            <th style=" color:white;font-size: 20px;background-color:green;">نوع المستخدم</th>
+            <th style=" color:white;font-size: 20px;background-color:green;" >عدد الحالات</th>
+            <th style=" color:white;font-size: 20px;background-color:green;">سعر الحاله</th>
+            <th style=" color:white;font-size: 20px;background-color:green;"> الإجمالى قبل الضريبه</th>
+            <th style=" color:white;font-size: 20px;background-color:green;"> الضريبه</th>
+            <th style=" color:white;font-size: 20px;background-color:green;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+      
+     @foreach (var item in Model.Jan)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+
+        }   
+        <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Jan.Sum(a=>a.AfterTotal)
+         </td>
+
+        </tr>
+            </tbody>
+        }      
+     @if(Model.Feb !=null&&Model.Feb.Count()!=0)
+        {
+                <thead>
+        <tr><th colspan="3" style="color: black;">   فاتورة شهر فبراير  @Model.Feb.LastOrDefault().DonefromReviewr.Year </th>
+       <th style="color: black;" colspan="4"> <button onclick="Pay(2)"  style="float: left;"> تم الدفع </button></th>
+           </tr>
+        <tr>
+
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Feb)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+           <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Feb.Sum(a=>a.AfterTotal)
+         </td>
+
+        </tr>
+        </tbody>
+        }       
+        @if(Model.MArc !=null&&Model.MArc.Count()!=0)
+        {
+              <thead>
+        <tr><th  colspan="3"style="color: black;">   فاتورة شهر مارس   @Model.MArc.LastOrDefault().DonefromReviewr.Year </th>
+       <th style="color: black;" colspan="4"> <button onclick="Pay(3)"  style="float: left;"> تم الدفع </button></th>
+           </tr>
+        <tr>
+
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.MArc)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+              <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.MArc.Sum(a=>a.AfterTotal)
+         </td>
+
+        </tr>
+             </tbody>
+        }      
+        @if(Model.April !=null&&Model.April.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر إبريل  @Model.April.LastOrDefault().DonefromReviewr.Year</th>
+                  <th style="color: black;" colspan="4"> <button onclick="Pay(4)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.April)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+        <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.April.Sum(a=>a.AfterTotal)
+         </td>
+
+        </tr>
+             </tbody>
+        } 
+      
+        @if(Model.May !=null&&Model.May.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">    فاتورة شهر مايو  @Model.May.LastOrDefault().DonefromReviewr.Year</th>
+                <th style="color: black;" colspan="4"> <button onclick="Pay(5)"  style="float: left;"> تم الدفع </button></th>
+ 
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.May)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+          <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.May.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+
+             </tbody>
+        }  @if(Model.Jun !=null&&Model.Jun.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر يونيو @Model.Jun.LastOrDefault().DonefromReviewr.Year</th>
+                  <th style="color: black;" colspan="4"> <button onclick="Pay(6)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Jun)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+         <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Jun.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        }  @if(Model.Jul !=null&&Model.Jul.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر يوليو @Model.Jul.LastOrDefault().DonefromReviewr.Year</th>
+                 <th style="color: black;" colspan="4"> <button onclick="Pay(7)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Jul)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+          <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Jul.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        }  @if(Model.Agu !=null&&Model.Agu.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر أغسطس @Model.Agu.LastOrDefault().DonefromReviewr.Year</th>
+                <th style="color: black;" colspan="4"> <button onclick="Pay(8)"  style="float: left;"> تم الدفع </button></th>
+ 
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Agu)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+           <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Agu.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        }  @if(Model.Sept !=null&&Model.Sept.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر سيبتمبر @Model.Sept.LastOrDefault().DonefromReviewr.Year</th>
+                <th style="color: black;" colspan="4"> <button onclick="Pay(9)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Sept)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+          <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Sept.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        }
+        @if(Model.oct !=null&&Model.oct.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر أكتوبر  @Model.oct.LastOrDefault().DonefromReviewr.Year</th>
+              <th style="color: black;" colspan="4"> <button onclick="Pay(10)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.oct)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+        <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.oct.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        } 
+        @if(Model.Nuv !=null&&Model.Nuv.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر نوفمبر  @Model.Nuv.LastOrDefault().DonefromReviewr.Year</th>
+                  <th style="color: black;" colspan="4"> <button onclick="Pay(11)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Nuv)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+              <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Nuv.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        }  @if(Model.Dec !=null&&Model.Dec.Count()!=0)
+        {
+         <thead>
+        <tr><th style="color: black;">   فاتورة شهر ديسيمبر  @Model.Dec.LastOrDefault().DonefromReviewr.Year</th>
+                 <th style="color: black;" colspan="4"> <button onclick="Pay(12)"  style="float: left;"> تم الدفع </button></th>
+
+        </tr>
+          <tr>
+            <th style="color: black;">المحافظه</th>
+            <th style="color: black;">نوع المستخدم</th>
+            <th style="color: black;" >عدد الحالات</th>
+            <th style="color: black;">سعر الحاله</th>
+            <th style="color: black;"> الإجمالى قبل الضريبه</th>
+            <th style="color: black;"> الضريبه</th>
+            <th style="color: black;"> الإجمالى بعد الضريبه</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model.Dec)
+        {
+             <tr>
+            <td>@item.NameCompany</td>
+            <td>@item.TypeOfCases</td>
+            <td>@item.NumberOfCases</td>
+             <td>@item.Price</td>
+             <td>@item.Total</td>
+            <td>@item.Texas</td>
+            <td>@item.AfterTotal</td>
+             </tr>
+        }  
+            <tr>
+            <td colspan="1"> الإجمالى</td>
+            <td colspan="6" style="text-align:center;">     
+              @Model.Dec.Sum(a=>a.AfterTotal)
+         </td>
+         
+        </tr>
+             </tbody>
+        }  
+ 
+       
+
+</table>
+<script>
+    function  Pay(date) {
+        	var id = $('#Vale').val();
+		$.ajax({
+			url: "/Bills/Pay",
+			cache: false,
+			data: { 'Id': id ,'date':date},
+			success: function (res) {
+				swal({
+					title: "تم الدفع ",
+					text: res.msg,
+					type: "success"
+				});
+			
+			}
+			, error: function (res) {
+				try {
+					swal({
+						title: "Error",
+						text: res.responseJSON.message,
+						type: "error"
+					});
+				} catch (e) {
+					swal({
+						title: "خطا",
+						text: "برجاء المحاولة مرة اخرى",
+						type: "error"
+					});
+				}
+            }
+                });
+   }
+</script>

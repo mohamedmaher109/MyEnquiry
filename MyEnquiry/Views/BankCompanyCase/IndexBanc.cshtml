@@ -1,0 +1,105 @@
+﻿@using MyEnquiry_BussniessLayer.ViewModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var Cities = (List<SelectView>)ViewBag.Companies;
+    var casetypes = (List<SelectView>)ViewBag.CaseTypes;
+    var igh = ViewBag.id;
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        
+        <div class="col-lg-4">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">إضافة سعر</strong>
+                        </div>
+                        <div class="card-body">
+
+                            @using (Html.BeginForm("Add", "BankCompanyCase", new { enctype = "multipart/form-data" }, FormMethod.Post, true, new { @id = "formaddbank" }))
+                            {
+                                <input hidden value="@(ViewBag.id)" name="CompaniesId" id="kjdk" data-id="@(ViewBag.id)">
+                                      <div class="form-group col-md-12">
+                                    <label for="simple-select2">أنواع الحالات</label>
+                                    <select name="CaseTypesId" class="form-control select2 req" id="simple-select2" width="100">
+                                        <option value="">اختر نوع الحالة</option>
+                                        @foreach (var item in casetypes)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                      <div class="form-group col-md-12">
+                                    <label for="simple-select2">المحافظه</label>
+                                    <select name="CitiesId" class="form-control select2 req" id="simple-select2" width="100">
+                                        <option value="">اختر المحافظه</option>
+                                        @foreach (var item in Cities)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputAddress"> سعر الحاله</label>
+                                    @Html.TextBox("PriceCase", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة سعر الحاله" })
+                                </div>
+                             
+                                <button type="submit" class="btn btn-primary">إضافه</button>
+                            }
+
+
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">التعاقد</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="dispalygrid">
+
+
+
+                            </div>
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+    </div>
+</div>
+
+<div class="disedit">
+
+</div>
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+    <script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+    <script src="~/js/cutompages/CompanyBank.js"></script>
+
+
+}

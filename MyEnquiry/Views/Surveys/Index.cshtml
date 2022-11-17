@@ -1,0 +1,105 @@
+﻿@{
+	ViewData["Title"] = "الإستعلامات";
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card shadow mb-4">
+						<div class="card-header">
+							<strong class="card-title">إضافة إستعلام</strong>
+						</div>
+						<div class="card-body">
+							@using (Html.BeginForm("Add", "Surveys", null, FormMethod.Post, true, new { @id = "formadd" }))
+							{
+								@*<div class="form-group">
+									<label for="Name">إسم الإستعلام*</label>
+									@Html.TextBox("Name", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة اسم الإستعلام" })
+								</div>*@
+
+								<div class="form-group">
+									<label for="CaseTypeId">نوع الحالة*</label>
+									@Html.DropDownList("CaseTypeId", (IEnumerable<SelectListItem>)ViewBag.CaseTypes, null, new { @class = "form-control req", required = true })
+								</div>
+
+								<div class="form-group">
+									<label for="BankId">البنك*</label>
+									@Html.DropDownList("BankId", (IEnumerable<SelectListItem>)ViewBag.Banks, null, new { @class = "form-control req", required = true })
+								</div>
+
+								<div class="form-group">
+									<label for="Description">وصف الإستعلام</label>
+									@Html.TextArea("Description", "", 5, 4, new { @class = "form-control", @type = "text", @placeholder = "هذا الوصف سيتم عرضه فى الاستماره" })
+								</div>
+
+								@*<div class="form-group">
+									<label for="Logo1">الشعار الأول</label>
+									<input type="file" accept="image/*" name="Logo1" id="Logo1" class="form-control" />
+								</div>
+
+								<div class="form-group">
+									<label for="Logo1Text">اسم الشعار الأول</label>
+									@Html.TextBox("Logo1Text", "", new { @class = "form-control", @type = "text", @placeholder = "هذا الاسم سيتم عرضه تحت الشعار الأول" })
+								</div>
+
+								<div class="form-group">
+									<label for="Logo2">الشعار الثاني</label>
+									<input type="file" accept="image/*" name="Logo2" id="Logo2" class="form-control" />
+								</div>
+
+								<div class="form-group">
+									<label for="Logo2Text">اسم الشعار الثاني</label>
+									@Html.TextBox("Logo2Text", "", new { @class = "form-control", @type = "text", @placeholder = "هذا الاسم سيتم عرضه تحت الشعار الثاني" })
+								</div>*@
+
+								<div class="form-group">
+									<label for="IsAcceptingResponses">الإستعلام يستقبل ردود؟</label>
+									@Html.CheckBox("IsAcceptingResponses", true, new { })
+								</div>
+
+								<button type="submit" class="btn btn-primary">اضافة</button>
+							}
+						</div> <!-- /. card-body -->
+					</div> <!-- /. card -->
+				</div> <!-- /. col -->
+			</div> <!-- /. end-section -->
+
+		</div>
+
+
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card shadow mb-4">
+						<div class="card-header">
+							<strong class="card-title">الإستعلامات</strong>
+						</div>
+						<div class="card-body">
+							<div class="dispalygrid">
+							</div>
+						</div> <!-- /. card-body -->
+					</div> <!-- /. card -->
+				</div> <!-- /. col -->
+			</div> <!-- /. end-section -->
+
+		</div>
+
+	</div>
+</div>
+
+<div class="disedit">
+
+</div>
+
+@section Scripts {
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+	<script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+	<script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+	<script src="~/js/sweetalert/sweetalert.min.js"></script>
+	<script src="~/js/cutompages/Surveys.js"></script>
+}

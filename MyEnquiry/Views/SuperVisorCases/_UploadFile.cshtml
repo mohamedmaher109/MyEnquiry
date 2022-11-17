@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var caseid = (int)ViewBag.CaseId;
+}
+<!-- Modal -->
+<div class="modal fade"  id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">ارفاق صورة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("UploadImage", "SuperVisorCases", new { area = "" }, FormMethod.Post, true, new { @id = "formaupload" }))
+            {
+                @Html.Hidden("Id",caseid)
+                <div class="modal-body">
+
+                    <div class="form-group mb-3">
+                        <label for="customFile">اختر صورة</label>
+                        <div class="custom-file">
+                            <input type="file" name="file" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="file">
+                            <label class="custom-file-label" for="customFile">ارفاق صورة</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">ارسال</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

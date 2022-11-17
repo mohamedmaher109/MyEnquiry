@@ -1,0 +1,62 @@
+﻿@using MyEnquiry_BussniessLayer.ViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+  var Cities = (List<SelectView>)ViewBag.Cities;
+}
+@model MyEnquiry_DataLayer.Models.Regions
+
+<!-- Modal -->
+<div class="modal fade"  id="EditRegionModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">تعديل المنطقة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Edit", "Region", new { area = "" }, FormMethod.Post, true, new { @id = "formaEdit" }))
+            {
+        <div class="modal-body">
+
+            @Html.HiddenFor(m => m.Id)
+                  <div class="form-group">
+                         <label for="simple-select2">المحافظات</label>
+                           <select name="CitiesId" class="form-control select2 req" id="simple-select2" width="100">
+                             <option value="">اختر المحافظه</option>
+                            @foreach (var item in Cities)
+                             {
+                          <option value="@item.Id">@item.Name</option>
+                           }
+                      </select>
+              </div>
+            <div class="form-group">
+                <label for="inputAddress">اسم المنطقة باللغة العربية</label>
+                @Html.TextBoxFor(m => m.NameAr, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم المنطقة  باللغة العربية" })
+
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">اسم المنطقة باللغة الانجليزيه</label>
+                @Html.TextBoxFor(m => m.NameEn, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم المنطقة باللغة الانجليزيه" })
+
+            </div>
+            <div class="form-group">
+                <label for="Active">نشط؟</label>
+                @Html.CheckBoxFor(m => m.Active)
+
+            </div>
+
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

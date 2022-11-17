@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title style="font-size: 15.5px;" >@ViewData["Title"] - استعلامى</title>
+
+    <link rel="icon" href="favicon.ico">
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="~/light-rtl/css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="~/light-rtl/css/feather.css">
+    <link rel="stylesheet" href="~/light-rtl/css/select2.css">
+    <link rel="stylesheet" href="~/light-rtl/css/dropzone.css">
+    <link rel="stylesheet" href="~/light-rtl/css/uppy.min.css">
+    <link rel="stylesheet" href="~/light-rtl/css/jquery.steps.css">
+    <link rel="stylesheet" href="~/light-rtl/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="~/light-rtl/css/quill.snow.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="~/light-rtl/css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="~/light-rtl/css/app-light.css" id="lightTheme">
+   
+
+    <link rel="stylesheet" href="~/light-rtl/css/app-dark.css" id="darkTheme" disabled>
+     <link rel="stylesheet" href="~/light-rtl/css/meta.css">
+    
+</head>
+
+@using MyEnquiry.Helper
+@{ AuthrizePage auth = new AuthrizePage(); }
+
+<body class="vertical  light rtl" style="font-size: 16px;  ">
+    <div class="wrapper">
+        <nav class="topnav navbar navbar-light">
+            <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+                <i class="fe fe-menu navbar-toggler-icon"></i>
+            </button>
+            @*<form class="form-inline mr-auto searchform text-muted">
+                <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Type something..." aria-label="Search">
+            </form>*@
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+                        <i class="fe fe-sun fe-16"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-muted my-2" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">مرحبا: @User.Identity.Name</strong>
+                            </span> <span class="text-muted text-xs block"><i class="fa fa-cogs"> &nbsp;</i>@UserHelper.UserRoleName(User) <b class="caret"></b></span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted my-2" href="@Url.Action("Logout","User")">تسجيل الخروج</a>
+                </li>
+            </ul>
+        </nav>
+        @Html.Partial("_Navigation")
+        <main role="main" class="main-content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="row align-items-center mb-2">
+                            <div class="col">
+                             
+                             
+                            </div>
+                            @*<div class="col-auto">
+                                <form class="form-inline">
+                                    <div class="form-group d-none d-lg-inline">
+                                        <label for="reportrange" class="sr-only">Date Ranges</label>
+                                        <div id="reportrange" class="px-2 py-2 text-muted">
+                                            <span class="small"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-sm"><span class="fe fe-refresh-ccw fe-16 text-muted"></span></button>
+                                        <button type="button" class="btn btn-sm mr-2"><span class="fe fe-filter fe-16 text-muted"></span></button>
+                                    </div>
+                                </form>
+                            </div>*@
+                        </div>
+                        @*bodyhere*@
+
+
+                        @RenderBody()
+
+                    </div> <!-- .col-12 -->
+                </div> <!-- .row -->
+            </div> <!-- .container-fluid -->
+            @*LayoutModal*@
+
+        </main> <!-- main -->
+
+        <footer class="">
+            <p class="mt-5 mb-3 text-muted text-center">© 2022 All Rights Reserved. By <a href="http://www.fairsolutions-fsc.com/" target="_blank">Fair-solutions</a></p>
+        </footer>
+    </div> <!-- .wrapper -->
+    <script src="~/dark-rtl/js/jquery.min.js"></script>
+    <script src="~/light-rtl/js/jquery.min.js"></script>
+    <script src="~/light-rtl/js/popper.min.js"></script>
+    <script src="~/light-rtl/js/moment.min.js"></script>
+    <script src="~/light-rtl/js/bootstrap.min.js"></script>
+    <script src="~/light-rtl/js/simplebar.min.js"></script>
+    <script src='~/light-rtl/js/daterangepicker.js'></script>
+    <script src='~/light-rtl/js/jquery.stickOnScroll.js'></script>
+    <script src="~/light-rtl/js/tinycolor-min.js"></script>
+    <script src="~/light-rtl/js/config.js"></script>
+    <script src="~/light-rtl/js/d3.min.js"></script>
+    <script src="~/light-rtl/js/topojson.min.js"></script>
+    <script src="~/light-rtl/js/datamaps.all.min.js"></script>
+    <script src="~/light-rtl/js/datamaps-zoomto.js"></script>
+    <script src="~/light-rtl/js/datamaps.custom.js"></script>
+    <script src="~/light-rtl/js/Chart.min.js"></script>
+    <script>
+        /* defind global options */
+        Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+        Chart.defaults.global.defaultFontColor = colors.mutedColor;
+    </script>
+    <script src="~/light-rtl/js/gauge.min.js"></script>
+    <script src="~/light-rtl/js/jquery.sparkline.min.js"></script>
+    <script src="~/light-rtl/js/apexcharts.min.js"></script>
+    <script src="~/light-rtl/js/apexcharts.custom.js"></script>
+    <script src='~/light-rtl/js/jquery.mask.min.js'></script>
+    <script src='~/light-rtl/js/select2.min.js'></script>
+    <script src='~/light-rtl/js/jquery.steps.min.js'></script>
+    <script src='~/light-rtl/js/jquery.validate.min.js'></script>
+    <script src='~/light-rtl/js/jquery.timepicker.js'></script>
+    <script src='~/light-rtl/js/dropzone.min.js'></script>
+    <script src='~/light-rtl/js/uppy.min.js'></script>
+    <script src='~/light-rtl/js/quill.min.js'></script>
+    <script src="~/js/cutompages/layout.js"></script>
+
+    <script src="~/light-rtl/js/apps.js"></script>
+
+     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-56159088-1');
+    </script>
+         <script>
+	$(document).ready(function () {
+
+
+
+		var id = $('#Vale').val();
+
+		$.ajax({
+			url: "/Dues/DisplayAllCompany2",
+			cache: false,
+			type: 'Get',
+			data: { Id: id },
+			success: function (html) {
+				$(".dispaly5432").html(html);
+				$('#dataTable-32').DataTable(
+					{
+						autoWidth: true,
+						"lengthMenu": [
+							[10, 20, 40, -1],
+							[10, 20, 40, "All"]
+						]
+					});
+			
+			}
+
+		})
+
+	})
+
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

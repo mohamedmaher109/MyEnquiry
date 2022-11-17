@@ -1,0 +1,31 @@
+﻿@model ICollection<MyEnquiry_BussniessLayer.ViewModels.DuiesBank>
+
+@using MyEnquiry.Helper
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>اسم البنك</th>
+        
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.NameCompany</td>
+       
+            
+            <td>  
+              
+                <a type="button" href="~/Bills/Index2/@item.Id" data-id="@item.Id"   class="btn mb-2 btn-outline-primary Bill">فاتورة</a>
+                      <input name="Id" value=@item.Id hidden id="Vale">
+            </td>
+           
+        </tr>
+
+        }
+
+
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+﻿@model ICollection<MyEnquiry_DataLayer.Models.SurveyForm>
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>الحالة</th>
+            <th>البنك</th>
+            <th>عناصر الإستعلام</th>
+            <th>الردود</th>
+            <th>تاريخ الاضافة</th>
+            <th>التحكم</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.CaseType.NameAr</td>
+                @if(@item.Bank!=null)
+                {
+                    <td>@item.Bank.NameAr</td>
+                }
+                else{
+                       <td>لايوجد</td>
+                }
+                
+            <td><a href="@Url.Action("Index", "SurveyElements", new { surveyId = item.Id })">عرض العناصر</a></td>
+            <td>
+                @if (item.IsAcceptingResponses)
+                {
+                    <p class="alert-info text-center">تستقبل ردود</p>
+                }
+                else
+                {
+                    <p class="alert-danger text-center">لا تستقبل ردود</p>
+                }
+            </td>
+            <td dir="ltr">@item.CreatedAt.ToString("dd-MMMM-yyyy hh:mm tt")</td>
+			<td>
+				<a href="@Url.Action("Responses", "Surveys", new { id = item.Id})" class="btn mb-2 btn-outline-info">الردود</a>
+				<button type="button" data-form-identifier="@item.LinkIdentifier" class="btn mb-2 btn-outline-success open-link">معاينة</button>
+				<button type="button" data-form-identifier="@item.LinkIdentifier" class="btn mb-2 btn-outline-success copy-form-url">نسخ الرابط</button>
+				<a href="@Url.Action("Details", "Surveys", new { id = item.Id })" class="btn mb-2 btn-outline-dark">التفاصيل</a>
+				<button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary editregion">تعديل</button>
+				<button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger deleteregion">حذف</button>
+				<button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger CopySurvey">نسخ الاستماره</button>
+			</td>
+        </tr>
+        }
+    </tbody>
+</table>

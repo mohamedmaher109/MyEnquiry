@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model MyEnquiry_DataLayer.Models.Companies
+<!-- Modal -->
+<div class="modal fade"  id="EditCompanyModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">تعديل الشركة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Edit", "Company", new { area = "" }, FormMethod.Post, true, new { @id = "formaEdit" }))
+            {
+        <div class="modal-body">
+
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                <label for="inputAddress">اسم الشركة باللغة العربية</label>
+                @Html.TextBoxFor(m => m.NameAr, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم الشركة  باللغة العربية" })
+
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">اسم الشركة باللغة الانجليزيه</label>
+                @Html.TextBoxFor(m => m.NameEn, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم الشركة باللغة الانجليزيه" })
+
+            </div>
+            <div class="form-group mb-3">
+                <label for="customFile">اختر اللوجو الخاص بالشركة</label>
+                <div class="custom-file">
+                    @Html.TextBoxFor(m => m.Logofile, new { @class = "custom-file-input", @type = "file", @accept = "image/png, image/gif, image/jpeg" })
+                    @*<input type="image" name="Logofile" class="custom-file-input" id="customFile">*@
+                    <label class="custom-file-label" for="Logofile">اختر اللوجو</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Active">نشط؟</label>
+                @Html.CheckBoxFor(m => m.Active)
+
+            </div>
+
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

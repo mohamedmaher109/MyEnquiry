@@ -1,0 +1,116 @@
+﻿ @model ICollection<MyEnquiry_BussniessLayer.ViewModel.UserView>
+
+@using MyEnquiry_BussniessLayer.ViewModel
+@{
+    ViewData["Title"] = "المناديب المحذوفة";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var roles = (List<RoleView>)ViewBag.Roles;
+    var banks = (List<SelectView>)ViewBag.Banks;
+    var companies = (List<SelectView>)ViewBag.Companies;
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/select2.css">
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title"> المناديب المحذوفة</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="dispalygrid">
+
+                                 <table class="table datatables" id="table_id">
+                                        <thead>
+                                            <tr>
+                                                <th>الكود </th>
+                                                <th>الاسم </th>
+                                                <th>البريد الالكترونى</th>
+                                                <th>رقم الهاتف</th>
+                                              
+                                 
+                                                <th>العنوان </th>
+                                                <th>الرقم القومى </th>
+                                                @*<th>مناطق التغطية </th>*@
+                                                <th>اسم الشركة </th>
+                                                 <th>التحكم  </th>
+           
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>@item.Id.Substring(0,4)</td>
+                                                    <td> <label class="text-danger-dark">@item.FullName</label>  </td>
+                                                    <td>@item.Email</td>
+                                                    <td>@item.Phone</td>
+                                                   
+                                            
+                                                    <td>@item.Address</td>
+                                                    <td>@item.NationalId</td>
+                                                    @*<td>@item.Coveragenames</td>*@
+                                                    <td>@item.CompanyName</td>
+                                                    <td> <a href="/Representative/BackFromDeleted/@item.Id" class="btn mb-2 btn-outline-primary showdata" onclick="return confirm('هل أنت متأكد من أعادة تشغيل هذا الحساب ؟ ');" > إعادة المندوب </a></td>
+                
+
+
+             
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                            </div>
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+    </div>
+</div>
+<div class="disfiles"></div>
+
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+   @* <script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>*@
+    <script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+@*    <script src="~/js/cutompages/Representative.js"></script>
+*@
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7nopFZRSj0bFvdHCtQaWbnWWrzHq84Fk&sensor=false&libraries=&v=weekly"
+            async defer></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script>
+     $(document).ready( function () {
+            $('#table_id').DataTable( {
+                 paging: true,
+                 ordering:  false,
+                 "pagingType": "simple_numbers",
+                 "lengthMenu": [  5, 20, 75, 100 ] ,
+                 "oLanguage": {
+                               "sSearch": "البحث"
+                              }
+            } );
+    } );
+ 
+
+</script>
+}

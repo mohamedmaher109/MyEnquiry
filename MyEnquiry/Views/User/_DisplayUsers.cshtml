@@ -1,0 +1,62 @@
+﻿
+@model ICollection<MyEnquiry_BussniessLayer.ViewModel.UserView>
+<table class="table table-responsive datatables" id="dataTable-2">
+    <thead>
+        <tr>
+            <th>الاسم</th>
+            <th>البريد الالكترونى</th>
+            <th>رقم الهاتف(الواتس)</th>
+            <th>سعر الحاله</th>
+            <th>إسم الشركه أو البنك</th>
+            <th>تعديل الرقم السرى</th>
+            <th>تعديل</th>
+            <th>حذف</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.FullName</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+                <td>@item.Price</td>
+                <td class="text-center">
+                    @if (item.Usertype == 1)
+                    {
+                    <label class=" alert-info "> بنوك</label>
+                    }
+                    else if (item.Usertype == 2)
+                    {
+                <label class="alert-warning" style="background-color:lightgray;"> شركات</label>
+                    }
+                    else
+                    {
+                        <label class="alert-success" style="background-color:firebrick; color: white;">مسؤول</label>
+                    }
+
+
+                </td>
+
+                <td>
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary changepass">تغير الباسورد</button>
+
+                </td> 
+                <td>
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary edituser">تعديل</button>
+
+                </td>
+                <td>
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger deleteuser">حذف</button>
+
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
+
+
+
+

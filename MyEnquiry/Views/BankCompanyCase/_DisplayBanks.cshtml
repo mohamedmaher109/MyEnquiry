@@ -1,0 +1,35 @@
+﻿@model ICollection<MyEnquiry_DataLayer.Models.Companies>
+<table class="table datatables" id="dataTable-2">
+    <thead>
+        <tr>
+            
+            <th>إسم الشركه</th>
+            
+
+            <th>إضافه</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+          @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td>@item.NameAr</td>
+
+
+                    <td>
+                        <a href="~/BankCompanyCase/IndexBanc/@item.Id" data-Ukh="@item.Id"  class="btn mb-2 btn-outline-primary Newa">تسجيل الأسعار</a>
+
+                    </td>
+
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>

@@ -1,0 +1,120 @@
+﻿
+.rtl.vertical .sidebar-left .navbar-nav .nav-link, .rtl.vertical.hover .sidebar-left .navbar-nav .nav-link {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    font-family: system-ui !important;
+}
+
+.table th, .table td {
+    font-size: 24px !important;
+}
+
+
+.text-muted {
+    color: #797979 !important;
+    font-size: 18px !important;
+    font-weight: 800;
+}
+
+.card shadow {
+    margin-top: 40px !important;
+}
+
+.alert-success {
+    background-color: transparent !important;
+    color: #000 !important;
+}
+
+.alert-info {
+    color: #000;
+    background-color: transparent !important;
+}
+
+.alert-warning {
+    color: #000;
+    background-color: transparent !important;
+}
+
+.card-title {
+    font-size: 24px !important;
+}
+
+.card-body {
+    font-size: 22px !important;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, strong {
+    font-size: 22px !important;
+}
+
+.card-shadow {
+    margin-top: 40px !important;
+}
+
+.form-group {
+    font-size: 22px !important;
+}
+
+.btn-outline-primary {
+    color: #fff;
+    border-color: #1b68ff;
+    background-color: #1b68ff;
+}
+
+    .btn-outline-primary:hover {
+        color: #000;
+        border-color: #1b68ff;
+        background-color: transparent;
+    }
+
+.btn-outline-info {
+    color: #fff;
+    border-color: #17a2b8;
+    background-color: #17a2b8;
+}
+
+    .btn-outline-info:hover {
+        color: #000;
+        border-color: #17a2b8;
+        background-color: #ffffff;
+    }
+
+.btn-outline-success {
+    color: #fff;
+    border-color: #17a2b8;
+    background-color: #17a2b8;
+}
+
+    .btn-outline-success:hover {
+        color: #000;
+        border-color: #17a2b8;
+        background-color: #ffffff;
+    }
+
+.btn-outline-dark {
+    color: #fff;
+    border-color: #17a2b8;
+    background-color: #17a2b8;
+}
+
+    .btn-outline-dark:hover {
+        color: #000;
+        border-color: #17a2b8;
+        background-color: #ffffff;
+    }
+
+.btn {
+    font-size: inherit !important;
+}
+
+.jstree-default .jstree-anchor {
+    font-size: x-large;
+}
+
+label {
+    font-size: x-large !important;
+}
+
+.table thead th {
+    font-weight: 800 !important;
+}

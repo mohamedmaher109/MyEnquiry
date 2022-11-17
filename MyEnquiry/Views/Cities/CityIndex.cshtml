@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-4">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">إضافة المحافظه</strong>
+                        </div>
+                        <div class="card-body">
+
+                            @using (Html.BeginForm("Add", "Cities", new { area = "" }, FormMethod.Post, true, new { @id = "formadd" }))
+                            {
+
+                                <div class="form-group">
+                                    <label for="inputAddress">اسم المحافظه باللغة العربيه</label>
+                                    @Html.TextBox("NameAr", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة اسم المحافظه باللغة العربيه" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress"> اسم المحافظه باللغة الانجليزيه</label>
+                                    @Html.TextBox("NameEn", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة اسم المحافظه باللغة الانجليزيه" })
+
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="Active">نشط؟</label>
+                                    @Html.CheckBox("Active", false, new { })
+
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">اضافة</button>
+                            }
+
+
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">المدن</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="dispalygrid">
+
+
+
+                            </div>
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+    </div>
+</div>
+
+<div class="disedit">
+
+</div>
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+    <script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+    <script src="~/js/cutompages/Cities.js"></script>
+
+
+}

@@ -1,0 +1,103 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+
+}
+        @model IList<MyEnquiry_BussniessLayer.ViewModels.AnswerVm> 
+        <!-- Modal -->
+        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" style="z-index: 1400;" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">مراجعة الحالة</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form class="" id="formEditCaseForm" action="EditCaseForm"  enctype="multipart/form-data" method="post">
+                        <div class="modal-body">
+
+                            @for (int i = 0; i < Model.Count(); i++)
+                            {
+                                @Html.HiddenFor(m => m[i].FormId)
+                                @Html.HiddenFor(m => m[i].HasFile)
+                                @Html.HiddenFor(m => m[i].CaseId)
+
+                                        <h3 for="inputAddress" style="color: #ff3030; font-weight: bolder">@Model[i].Question</h3>
+                                        @if (Model[i].Qtype == true)
+                                        {
+                                            @for (int j = 0; j < Model[i].formanswers.Count(); j++)
+                                            {
+
+                                                <div class="form-group col-12">
+                                                    @Html.RadioButtonFor(m => m[i].SelectedAnswerId, @Model[i].formanswers[j].AnswerId, new { @class = "form-check-input", @type = "radio"  })
+                                                    <label class="">@Model[i].formanswers[j].Answer</label>
+
+                                                </div>
+                                                @*@Html.TextBoxFor(m => m[i].formanswers[j].AnswerId, new { @class = "form-check-input", type = "radio", value = @Model[i].formanswers[j].Answer })*@
+
+                                                @*@Html.HiddenFor(m => m[i].formanswers[j].Answer)*@
+                                            }
+                                        }
+                                        else if(Model[i].Qtype == false)
+                                        {
+                                            @for (int j = 0; j < Model[i].formanswers.Count(); j++)
+                                            {
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m[i].SelectedAnswertext, new { @class = "form-control", @type = "text"})
+
+                                                </div>
+                                                @Html.HiddenFor(m => m[i].formanswers[j].AnswerId)
+                                            }
+                                        }
+
+                                        @*@Html.TextBoxFor(m => m[i].FromAnswer, new { @class = "form-control req", @type = "text", @placeholder = "الاجابة" })*@
+
+
+                                    <div class=" form-group" @(Model[i].HasFile == true ? "" : "hidden")>
+                                        <label for="@Model[i].FileUpload" style="color: #0094ff; font-weight: bolder">ارفق صورة</label>
+                                        <div class="custom-file">
+                                            @Html.TextBoxFor(m => m[i].FileUpload, new { @class = "custom-file-input", @type = "file", @multiple = "multiple", @accept = "image/png, image/gif, image/jpeg, image/jpg" })
+                                            @*<input type="file"  name="@Model[i].FileUpload"  accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="customFile">*@
+
+                                            <label class="custom-file-label" for="@Model[i].FileUpload">الملف</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" @(Model[i].HasFile == true ? "" : "hidden")>
+                                        <label for="customFile" style="color: #0094ff; font-weight: bolder">اظهار المرفق</label>
+                                        <div class="custom-file">
+                                            <button type="button" data-id="@Model[i].FormId" class="btn mb-2 btn-outline-info showanswerfile">المرفق</button>
+                                        </div>
+
+
+                                    </div>
+
+
+                                <hr />
+
+
+                            }
+
+
+
+
+
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                            <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                        </div>
+                    </form>
+                    @*@using (Html.BeginForm("EditCaseForm", "CasesTracking", new { enctype = "multipart/form-data" }, FormMethod.Post, true, new { @id = "formEditCaseForm" }))
+                    {
+               
+                    }*@
+                </div>
+            </div>
+        </div>
+<div class="modalfileform"></div>

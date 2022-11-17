@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ICollection<MyEnquiry_DataLayer.Models.Cases>
+
+@using MyEnquiry.Helper
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>رقم الحالة</th>
+            <th>نوع الحالة</th>
+            <th>حالة الحالة</th>
+            <th>اسم البنك</th>
+
+            <th>شيت الاكسيل</th>
+
+            <th>استلام الحالة</th>
+            <th>رفع شيت الاكسيل</th>
+            <th>حذف الحالات</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+
+            <td>@item.Id</td>
+            <td>@(item.CaseType!=null?item.CaseType.NameAr:"غير معروف")</td>
+            <td>@(item.CaseStatus!=null?item.CaseStatus.NameAr:"غير معروف")</td>
+            <td>@(item.Bank!=null?item.Bank.NameAr:"غير معروف")</td>
+            <td> <a class="btn btn-link" href="@Url.Content(item.FileToShow)" download>تحميل</a></td>
+
+
+            
+            <td>
+                @if (item.CaseStatus.Id == (int)CaseEnumStatus.SentFromBank)
+                {
+                    <button type="button" data-id="@item.Id" data-type="1" data-bankid="@item.Bank.Id" class="btn mb-2 btn-outline-primary recive">استلام</button>
+                }
+                else if (item.CaseStatus.Id == (int)CaseEnumStatus.RecivedFromCompany)
+                {
+                    <button type="button" data-id="@item.Id" data-type="2" data-bankid="@item.Bank.Id" class="btn mb-2 btn-outline-primary recive">الغاء الاستلام</button>
+                }
+                else
+                {
+                    <label class="alert alert-danger">غير مسموح تم ارسالها الى المناديب</label>
+                }
+
+
+            </td>
+            <td>
+                @if (item.CaseStatus.Id == (int)CaseEnumStatus.RecivedFromCompany)
+                {
+                    <button type="button" data-id="@item.Id" data-bankid="@item.Bank.Id" class="btn mb-2 btn-outline-primary upload">رفع الملف</button>
+                }
+                else if (item.CaseStatus.Id == (int)CaseEnumStatus.SentFromBank)
+                {
+                    <label class="alert alert-danger">يجب استلام الحالة</label>
+                }
+                else
+                {
+                    <label class="alert alert-danger">تم ارسالها الى المناديب</label>
+                }
+            </td>
+        
+         <td>
+          <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary deleteAllCases">حذف كل الحالات</button>
+        </td>
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

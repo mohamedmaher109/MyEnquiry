@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ICollection<MyEnquiry_DataLayer.Models.Cases>
+
+@using MyEnquiry.Helper
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>رقم الحالة</th>
+            <th>اسم العميل</th>
+            <th>رقم العميل</th>
+            <th>نوع الحالة</th>
+            <th>اسم الشركة</th>
+            <th>تحميل الملف</th>
+            <th>موافقة</th>
+            <th>رفض</th>
+           
+            
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+
+            <td>@item.Id</td>
+            <td>@item.ClientName</td>
+            <td>@item.ClientNumbers</td>
+            <td>@(item.CaseType!=null?item.CaseType.NameAr:"غير معروف")</td>
+            <td>@(item.Company!=null?item.Company.NameAr:"غير معروف")</td>
+            
+            <td><a  href="@item.FilesANswer" download> تحميل  PDF</a></td>
+
+
+            <td>
+                @if (item.CaseStatus.Id == (int)CaseEnumStatus.AcceptedFromBank)
+                {
+
+
+
+                    <label class="alert alert-success">تم قبول الحالة</label>
+
+                }
+                else if (item.CaseStatus.Id < (int)CaseEnumStatus.AcceptedFromBank)
+                {
+                    <button type="button" data-id="@item.Id" data-type="1" class="btn mb-2 btn-outline-success accept">قبول</button>
+                }
+
+
+
+            </td>
+
+            <td>
+                @if (item.CaseStatus.Id == (int)CaseEnumStatus.AcceptedFromBank)
+                {
+
+
+
+                    <label class="alert alert-success">تم قبول الحالة</label>
+
+                }
+                else if (item.CaseStatus.Id < (int)CaseEnumStatus.AcceptedFromBank)
+                {
+                    <button type="button" data-id="@item.Id" data-type="2" class="btn mb-2 btn-outline-danger reject">رفض</button>
+                }
+
+
+
+            </td>
+
+
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

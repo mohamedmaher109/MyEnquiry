@@ -1,0 +1,192 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ICollection<MyEnquiry_DataLayer.Models.Cases>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@using MyEnquiry.Helper
+<table class="table table-responsive" id="dataTable-1">
+    <thead>
+        <tr>
+            <th >رقم الحالة</th>
+             @if(!@Model.Any(a=>a.IsReiew))
+            {
+             <th >أسم المراجع</th>
+            }
+            <th >نوع الحالة</th>
+            <th >اسم البنك</th>
+            <th >اسم العميل</th>
+            <th >رقم العميل</th>
+
+            <th>محافظة العمل</th>
+            <th>عنوان العمل</th>
+          @*  <th>محافظة السكن</th>
+            <th>عنوان السكن</th>*@
+            <th>اتصال</th>
+
+            @*<th>ملف الوورد</th>*@
+            <th>حالة الحالة</th>
+            <th>رد المندوب</th>
+            <th>الموقع الحالى للمندوب</th>
+            @*<th>مرفقات من قبل المندوب</th>*@
+            <th>ارسال الى اخر</th>
+            @*<th>ارفاق صورة</th>*@
+           
+            <th>سبب الرفض ان وجد</th>
+            <th>قبول</th>
+            <th>تقييم المندوب</th>
+            <th>مراجعة الحالة</th>
+      @*      <th>رفع  ردالحاله للبنك</th>
+            <th>تحميل رد الحاله للبنك</th>*@
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td >@item.Id</td>
+           @if(!@item.IsReiew)
+           {
+            <td >@item.Reviewer.FullName</td>
+           }  
+            <td >@(item.CaseType!=null?item.CaseType.NameAr:"غير معروف")</td>
+            <td>@(item.Bank!=null?item.Bank.NameAr:"غير معروف")</td>
+            <td>@item.ClientName</td>
+            <td>@item.ClientNumbers</td>
+          @*  <td>@item.WorkGovernorate</td>
+            <td>@item.WorkAddress</td>*@
+            <td>@item.HomeGovernorate</td>
+            <td>@item.HomeAddress</td>
+            <td>
+
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-success makecall">إتصال</button>
+            </td>
+            @*<td>
+                @if (item.CaseStatus.Id > (int)CaseEnumStatus.AcceptedFromRecivers)
+                {
+                    <a class="btn btn-link" href="@Url.Content(item.FileToShow)" download>تحميل</a>
+                }
+                else
+                {
+                    <label class="alert alert-danger">لم يتم الوصول للعميل بعد</label>
+                }
+
+
+
+            </td>*@
+
+            <td>
+                <label class="alert alert-success">@item.CaseStatus.NameAr</label>
+                
+            </td>
+            <td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0 && item.CaseStatus.Id < (int)CaseEnumStatus.DoneFromReciver)
+                {
+                    <label class="alert alert-primary">تم قبول الحاله من المندوب</label>
+                }
+                else if (item.CaseStatus.Id == (int)CaseEnumStatus.DoneFromReciver)
+                {
+                    <label class="alert alert-success">تم انهاء الحالة من قبل المندوب</label>
+                }
+                else
+                {
+                    <label class="alert alert-danger">بانتظار المندوب</label>
+
+                }
+
+            </td>
+            <td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0)
+                {
+                     <button type="button" data-id="@item.Id"  class="btn mb-2 btn-outline-info location" >الموقع الحالى</button>
+
+                }
+
+                else
+                {
+                 <label class="alert alert-danger">بانتظار قبول الحالة من قبل المندوب</label>
+
+                }
+
+            </td>
+            @*<td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0)
+                {
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary filesFromRep">المرفقات</button>
+                }
+                else
+                {
+                    <label class="alert alert-warning">بانتظار قبول الحالة من قبل المندوب</label>
+                }
+
+            </td>*@
+            <td>
+                <button type="button" data-id="@item.Id"  class="btn mb-2 btn-outline-primary sendcase">ارسال الى مندوب اخر</button>
+            </td>
+         
+            @*<td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0)
+                {
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-info uploadimg">ارفاق صورة</button>
+                }
+                
+            </td>*@
+         
+         @*   <td>
+              
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-success reviewcase">مراجعة الحالة</button>
+             
+
+            </td>*@
+            <td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0&& item.CaseStatus.Id == (int)CaseEnumStatus.RejectedFromBank)
+                {
+                <label class="alert alert-danger">@item.RejectResion</label>
+                }
+                else
+                {
+                    <label class="alert alert-success">لم يتم ارسالها الى البنك</label>
+                }
+
+            </td>
+            <td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0&& item.CaseStatus.Id == (int)CaseEnumStatus.DoneFromReciver)
+                {
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-success acceptcase">قبول الحالة</button>
+                }
+                else
+                {
+                    <label class="alert alert-warning">بانتظار انتهاء الحالة من قبل المندوب</label>
+                }
+
+            </td>
+            <td>
+                @if (item.CasesOrders.Where(s => s.Status == 2).Count() > 0 && item.CaseStatus.Id >= (int)CaseEnumStatus.DoneFromReciver)
+                {
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-warning rate">تقييم المندوب</button>
+                }
+                else
+                {
+                    <label class="alert alert-warning">بانتظار انتهاء الحالة من قبل المندوب</label>
+
+                }
+            </td>
+         <td>
+          <a type="button" asp-action="GenerateResponseWordDocumentCase" asp-controller="CasesTracking" asp-route-id="@item.Id"   class="btn mb-2 btn-outline-warning">رد الإستماره</a>
+
+         </td> 
+    
+     
+@*            <td><a class="btn btn-outline-success" href="@item.FilesANswer" download> تحميل  PDF      </a></td>*@
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

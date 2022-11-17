@@ -1,0 +1,92 @@
+﻿
+@model ICollection<MyEnquiry_BussniessLayer.ViewModel.UserView>
+<table class="table table-responsive datatables" id="dataTable-28">
+    <thead>
+        <tr>
+            <th>الكود </th>
+            <th>الاسم </th>
+            <th>البريد الالكترونى</th>
+            <th>رقم الهاتف</th>
+            <th>اسم المحافظه </th>
+            <th>اسم المؤهل </th>
+            <th>العنوان </th>
+            <th>الرقم القومى </th>
+            @*<th>مناطق التغطية </th>*@
+            <th>اسم الشركة </th>
+            <th>الموقع الحالى </th>
+            <th>تغيير الباسوورد </th>
+            <th>الحظر</th>
+            <th>الملفات</th>
+            <th>تعديل</th>
+            <th>حذف</th>
+            <th>وافقه على المناديب</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.Id.Substring(0,4)</td>
+                <td>@item.FullName</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+                <td>@item.City</td>
+                <td>@item.Education</td>
+                <td>@item.Address</td>
+                <td>@item.NationalId</td>
+                @*<td>@item.Coveragenames</td>*@
+                <td>@item.CompanyName</td>
+                
+
+                <td>
+                  
+                        <button type="button" data-id="@item.Id"  class="btn mb-2 btn-outline-info location " >الموقع الحالى</button>
+
+                </td>
+                 <td>
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary changepassss">تغير الباسورد</button>
+
+                </td> 
+                <td>
+                    @if (item.Blocked == true)
+                    {
+                        <button type="button" data-id="@item.Id" data-type="2" class="btn mb-2 btn-outline-success block">الغاء الحظر</button>
+                    }
+                    else
+                    {
+                        <button type="button" data-id="@item.Id" data-type="1" class="btn mb-2 btn-outline-danger block">حظر</button>
+                    }
+             
+                </td>
+
+                <td>
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary showdata">عرض</button>
+
+                </td>
+                <td>
+                    <a href="@Url.Action("GetUser","Representative",new { Id=item.Id})" data-id="@item.Id" class="btn mb-2 btn-outline-primary ">تعديل</a>
+
+                </td>
+                <td>
+                    <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger delete">حذف</button>
+
+                </td>
+                <td>
+                   @if (item.IsAccepted == false)
+                    {
+                        <a href="/Representative/ChangeStatus/@item.Id"  class="btn mb-2 btn-outline-success ">الموافقه علي المندوب </a>
+                    }
+                </td> 
+
+
+
+            </tr>
+        }
+
+
+
+    </tbody>
+</table>
+
+

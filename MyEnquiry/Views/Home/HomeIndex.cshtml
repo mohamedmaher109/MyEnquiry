@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@model MyEnquiry_BussniessLayer.Helper.HomeStatistics
+<div class="row my-4">
+
+    @if (Model.usertype == 1)
+    {
+
+
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <small class="text-muted mb-1">الحالات</small>
+                            <h3 class="card-title mb-0">@Model.Casesnumber</h3>
+                            <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>@Model.Casesnumber</span></p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="sparkline inlineline"></span>
+                        </div>
+                    </div>  
+                </div>  
+            </div>  
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <small class="text-muted mb-1">الشركات</small>
+                            <h3 class="card-title mb-0">@Model.companynumber</h3>
+                            <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>@Model.companynumber</span></p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="sparkline inlineline"></span>
+                        </div>
+                    </div> 
+                </div>  
+            </div> 
+        </div>
+
+    }
+    else if (Model.usertype == 2)
+    {
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <small class="text-muted mb-1">المناديب</small>
+                            <h3 class="card-title mb-0">@Model.repnumber</h3>
+                            <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>@Model.repnumber</span></p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="sparkline inlineline"></span>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <small class="text-muted mb-1">الحالات</small>
+                            <h3 class="card-title mb-0">@Model.Casesnumber</h3>
+                            <p class="small text-muted mb-0"><span class="fe fe-arrow-down fe-12 text-danger"></span><span>@Model.Casesnumber</span></p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="sparkline inlineline"></span>
+                        </div>
+                    </div> 
+                </div>  
+            </div> 
+        </div>
+
+
+    }
+
+
+
+</div>

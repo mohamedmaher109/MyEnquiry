@@ -1,0 +1,30 @@
+﻿
+@model ICollection<MyEnquiry_BussniessLayer.ViewModels.StatsticsVm>
+<table class="table datatables" id="dataTable-3">
+    <thead>
+        <tr>
+            <th>البنك</th>
+            <th>الشركه</th>
+            <th>عدد الحالات المنتهيه</th>
+            <th>عدد الحالات المنتظره</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+           
+
+            <td>@item.NameBank</td>
+            <td>@item.NameCompany</td>
+            <td>@item.NumberOfCasesDone</td>
+            <td>@item.NumberOfCasesDone</td>
+      
+
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

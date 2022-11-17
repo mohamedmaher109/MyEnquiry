@@ -1,0 +1,35 @@
+﻿@model   ICollection<MyEnquiry_BussniessLayer.ViewModels.DuiesBank>
+
+@using MyEnquiry.Helper
+<table class="table datatables" id="dataTable-32">
+    <thead>
+        <tr>
+            <th>اسم الشركه</th>
+            <th>المحافظه</th>
+            <th>نوع الحاله</th>
+            <th>عدد الحالات</th>
+            <th>سعر الحاله</th>
+            <th> الإجمالى </th>
+     
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.NameCompany</td>
+                    <td>@item.City</td>
+                    <td>@item.TypeOfCases</td>
+                    <td>@item.NumberOfCases</td>
+                    <td>@item.Price</td>
+                    <td>@item.Total</td>
+
+
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>

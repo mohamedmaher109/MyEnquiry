@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+
+@{
+    var id = (int)ViewBag.Id;
+
+}
+<!-- Modal -->
+<div class="modal fade" id="SendCaseModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">ارجاع الحالة</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("ChangeStatus", "DoneCases", new { area = "" }, FormMethod.Post, true, new { @id = "formsend" }))
+            {
+                @Html.Hidden("Id", id)
+                @Html.Hidden("type", 2)
+                <div class="modal-body">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12  ">
+                            <label for="simple-select2"></label>
+                            @Html.TextArea("reson", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة سبب الرفض" })
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">ارسال</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

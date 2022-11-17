@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+@{
+    ViewData["Title"] = "متابعة الحالات";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var status = (List<SelectView>)ViewBag.Status;
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/select2.css">
+
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+
+                        <div class="card-body">
+
+                            <div class="form-group col-md-12  ">
+                                <label for="simple-select2"></label>
+                                <select name="StatusId" class="form-control select2 StatusId" id="simple-select2" width="100">
+                                    <option value="0">اختر الحالة</option>
+                                    @foreach (var item in status)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">الحالات</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="dispalyCases">
+
+
+
+                            </div>
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+    </div>
+</div>
+<div class="disfiles"></div>
+
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+    <script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+    <script src="~/js/cutompages/CasesTracking.js"></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4u0carA1Yrq_vJ7-gZuzd3-mYpnKg-DY&sensor=false&libraries=&v=weekly" async defer></script>
+
+       }

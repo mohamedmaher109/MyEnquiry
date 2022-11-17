@@ -1,0 +1,401 @@
+﻿@*@page
+	@model IndexModel*@
+
+@using MyEnquiry.Helper
+@{ AuthrizePage auth = new AuthrizePage(); }
+
+<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+	<a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+		<i class="fe fe-x"><span class="sr-only"></span></i>
+	</a>
+	<nav class="vertnav navbar navbar-light">
+		<!-- nav bar -->
+		<div class="w-100 mb-4 d-flex">
+			<a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="#" data-toggle="toggle">
+
+				<img id="logo2" class="navbar-brand-img brand-md" src="~/logo/Group 54396.svg" />
+
+			</a>
+		</div>
+		<ul class="navbar-nav flex-fill w-100 mb-2">
+			<li class="nav-item active">
+			<a class="nav-link pl-3" href="@Url.Action("HomeIndex","Home")"><span class="ml-1 item-text"style="font-size: xx-large;margin-right: 3.25rem !important;">إستعلامى</span></a>
+			</li>
+		</ul>
+		<p class="text-muted nav-heading mt-4 mb-1">
+			<span>الصفحات</span>
+		</p>
+		<ul class="navbar-nav flex-fill w-100 mb-2">
+		
+			@if (auth.CanView(PermissionItem.UserManegment, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-box fe-16"></i>
+						<span class="ml-3 item-text">المستخدمين</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+						@if (auth.CanView(PermissionItem.Roles, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Roles","User")">
+									<i class="fe fe-users fe-16"></i>
+									<span class="ml-1 item-text">المجموعات</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.Users, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Users","User")">
+									<i class="fe fe-user fe-16"></i>
+									<span class="ml-1 item-text">المستخدمين</span>
+								</a>
+							</li>
+						}
+
+						@if (auth.CanView(PermissionItem.Permissions, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("PermissionsIndex","User")">
+									<i class="fe fe-user-check fe-16"></i>
+
+									<span class="ml-1 item-text">الصلاحيات</span>
+								</a>
+							</li>
+						}
+
+
+						@*    @if (auth.CanView(PermissionItem.UserCashs, User))
+					{
+						<li class="nav-item">
+							<a class="nav-link pl-3" href="@Url.Action("CashIndex","User")">
+								<i class="fe fe-dollar-sign fe-16"></i>
+
+								<span class="ml-1 item-text">المستحقات</span>
+							</a>
+						</li>
+					}*@
+
+
+
+
+
+					</ul>
+				</li>
+			}
+			@if (auth.CanView(PermissionItem.MainData, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="#ui-elementsMainData" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-book-open fe-16"></i>
+						<span class="ml-3 item-text">المدخلات الرئيسية</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ui-elementsMainData">
+						@if (auth.CanView(PermissionItem.Banks, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("BankIndex","Banks")">
+									<i class="fe fe-paperclip fe-16"></i>
+									<span class="ml-1 item-text">البنوك</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.Companies, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CompanyIndex","Company")">
+									<i class="fe fe-home fe-16"></i>
+									<span class="ml-1 item-text">الشركات</span>
+								</a>
+							</li>
+						}
+
+						@if (auth.CanView(PermissionItem.Regions, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("RegionIndex","Region")">
+									<i class="fe fe-clipboard fe-16"></i>
+
+									<span class="ml-1 item-text">المناطق</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.Cities, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CityIndex","Cities")">
+									<i class="fe fe-clipboard fe-16"></i>
+									<span class="ml-1 item-text">المحافظات</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.CaseTypes, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CaseTypesIndex","CaseTypes")">
+									<i class="fe fe-type fe-16"></i>
+
+									<span class="ml-1 item-text">أنواع الحالات</span>
+								</a>
+							</li>
+						}
+					
+	      @if (auth.CanView(PermissionItem.CaseForms, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="@Url.Action("Index","Surveys")" class="nav-link">
+						<i class="fe fe-bar-chart-2 fe-16"></i>
+						<span class="ml-3 item-text">تقرير الاستعلام</span>
+					</a>
+				</li>
+			}
+
+						@if (auth.CanView(PermissionItem.Help, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("help","Home")">
+									<i class="fe fe-clipboard fe-16"></i>
+									<span class="ml-1 item-text">المساعده</span>
+								</a>
+							</li>
+						}
+
+						@if (auth.CanView(PermissionItem.privacy, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Privacy","Home")">
+									<i class="fe fe-clipboard fe-16"></i>
+									<span class="ml-1 item-text">الأمن والخصوصيه</span>
+								</a>
+							</li>
+						}
+
+					</ul>
+				</li>
+			}
+
+			@if (auth.CanView(PermissionItem.BankPages, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="#ui-elementsBankData" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-book-open fe-16"></i>
+						<span class="ml-3 item-text">شاشات البنوك</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ui-elementsBankData">
+					
+						@if (auth.CanView(PermissionItem.BankCases, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("BankCaseIndex","BankCases")">
+									<i class="fe fe-book-open fe-16"></i>
+									<span class="ml-1 item-text">حالات البنوك</span>
+								</a>
+							</li>
+						}
+
+
+						@if (auth.CanView(PermissionItem.RefusedCases, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Index","RefusedCases")">
+									<i class="fe fe-x-circle fe-16"></i>
+									<span class="ml-1 item-text">الحالات المرفوضة</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.DoneCases, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Index","DoneCases")">
+									<i class="fe fe-play-circle fe-16"></i>
+									<span class="ml-1 item-text">الحالات المنتهية</span>
+								</a>
+							</li>
+						}
+
+							@if (auth.CanView(PermissionItem.BankCases, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Index","BankCompanyCase")">
+									<i class="fe fe-book-open fe-16"></i>
+									<span class="ml-1 item-text">الشركات المتعاقده</span>
+								</a>
+							</li>
+						}
+
+					</ul>
+				</li>
+			}
+			@if (auth.CanView(PermissionItem.RepresentativeData, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="#ui-Representative" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-users fe-16"></i>
+						<span class="ml-3 item-text">شاشات المناديب</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ui-Representative">
+						@if (auth.CanView(PermissionItem.Representative, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Index","Representative")">
+									<i class="fe fe-user-plus fe-16"></i>
+									<span class="ml-1 item-text">المناديب</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("DeletededIndex","Representative")">
+									<i class="fe fe-user-plus fe-16"></i>
+									<span class="ml-1 item-text">المناديب المحذوفة</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.BlockedRepresentative, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("BlockedIndex","Representative")">
+									<i class="fe fe-user-x fe-16"></i>
+									<span class="ml-3 item-text">المناديب المحظورة</span>
+								</a>
+
+							</li>
+						}
+
+
+
+
+
+					</ul>
+				</li>
+			}
+			@if (auth.CanView(PermissionItem.CasesManegment, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="#ui-CasesManegment" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-users fe-16"></i>
+						<span class="ml-3 item-text">ادارة الحالات</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ui-CasesManegment">
+					
+						@if (auth.CanView(PermissionItem.CasesFromBank, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CasesFromBankIndex","Cases")">
+									<i class="fe fe-bookmark fe-16"></i>
+									<span class="ml-1 item-text">الحالات القادمة من البنوك</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.CaseTracking, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CasesIndex","CasesTracking")">
+									<i class="fe fe-book-open fe-16"></i>
+									<span class="ml-1 item-text">متابعة الحالات</span>
+								</a>
+							</li>
+						}
+
+						@if (auth.CanView(PermissionItem.CaseSuperVisor, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CasesIndex","SuperVisorCases")">
+									<i class="fe fe-book fe-16"></i>
+									<span class="ml-1 item-text"> متابعة الحالات القادمة من المراجعين</span>
+								</a>
+							</li>
+						}
+
+
+							@if (auth.CanView(PermissionItem.CompanyBills, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CompanyIndex","BankCompanyCase")">
+									<i class="fe fe-bookmark fe-16"></i>
+									<span class="ml-1 item-text">البنوك المتعاقده</span>
+								</a>
+							</li>
+						}
+
+					</ul>
+				</li>
+			}
+			@if (auth.CanView(PermissionItem.Duiesgeneral, User))
+			{
+				<li class="nav-item dropdown">
+					<a href="#ui-Representative" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-users fe-16"></i>
+						<span class="ml-3 item-text">شاشات المستحقات</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ui-Representative">
+						@if (auth.CanView(PermissionItem.Duies, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("BankIndex","Dues")">
+									<i class="fe fe-user-plus fe-16"></i>
+									<span class="ml-1 item-text">مستحقات الشركه</span>
+								</a>
+							</li>
+						}
+						@if (auth.CanView(PermissionItem.Company, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("CompanyIndex","Dues")">
+									<i class="fe fe-user-x fe-16"></i>
+									<span class="ml-3 item-text">الرواتب</span>
+								</a>
+
+							</li>
+						}
+
+						@if (auth.CanView(PermissionItem.Bills, User))
+						{
+							<li class="nav-item">
+								<a class="nav-link pl-3" href="@Url.Action("Index","Bills")">
+									<i class="fe fe-dollar-sign fe-16"></i>
+									<span class="ml-3 item-text"> فواتير البنك</span>
+								</a>
+
+							</li>
+						}
+
+					</ul>
+				</li>
+			}
+		   @if (auth.CanView(PermissionItem.Statstics, User))
+			{
+				<li class="nav-item">
+				  <a class="nav-link pl-3" href="@Url.Action("Index","Statstics")">
+							<i class="fe fe-bookmark fe-16"></i>
+						<span class="ml-1 item-text">الإحصائيات </span>
+					</a>
+				</li>
+			}
+		</ul>
+
+
+		<div class="btn-box w-100 mt-4 mb-1">
+			<a href="#" target="_blank" class="btn mb-2 btn-primary btn-lg btn-block">
+				<i class="fe fe-shopping-cart fe-12 mr-2"></i><span class="small">التطبيق</span>
+			</a>
+		</div>
+	</nav>
+</aside>
+<script>
+
+$(document).on("click", "#modeSwitcher", function () {
+
+     if ($("img").is('#logo'))
+     {
+        $("div").remove('<img src="~/logo/Group 54387.svg"> ');
+        $("div").prepend('<img src="~/logo/Group 54394.svg">');
+     }
+    else
+    {
+      $("div").remove('<img src="~/logo/Group 54394.svg">');
+      $("div").prepend('<img id="logo" src="~/logo/Group 54387.svg">');
+    }
+
+})
+
+</script>

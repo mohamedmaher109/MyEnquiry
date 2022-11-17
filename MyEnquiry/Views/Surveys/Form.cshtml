@@ -1,0 +1,248 @@
+﻿@{
+	Layout = null;
+	var survey = ViewBag.Survey as MyEnquiry_DataLayer.Models.SurveyForm;
+	int numberOfLogos = 1;
+	MyEnquiry_DataLayer.Models.Companies company = null;
+	if (ViewBag.Company != null)
+	{
+		company = ViewBag.Company as MyEnquiry_DataLayer.Models.Companies;
+		numberOfLogos += 1;
+	}
+
+	var userResponse = ViewBag.UserResponse as List<MyEnquiry_DataLayer.Models.SurveyFormResponse>;
+	//int numberOfLogos = 0;
+	//if (!string.IsNullOrWhiteSpace(survey.Logo1Url) || !string.IsNullOrWhiteSpace(survey.Logo2Url))
+	//{
+	//	numberOfLogos = !string.IsNullOrWhiteSpace(survey.Logo1Url) && !string.IsNullOrWhiteSpace(survey.Logo2Url) ? 2 : 1;
+	//}
+}
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	@*<link href="https://fonts.googleapis.com/css?family=Cairo:400,700,900&display=swap" rel="stylesheet">*@
+	<link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+	<link rel="icon" href="favicon.ico">
+	<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+	<link rel="stylesheet" href="fonts/icomoon/style.css">
+	<link href="~/survey-form/fonts/icomoon/style.css" rel="stylesheet" />
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/survey-form/css/bootstrap.min.css">
+
+	<!-- Style -->
+	<link rel="stylesheet" href="~/survey-form/css/style.css">
+
+	<title>استعلامى - @if(@survey.Bank!=null){@survey.Bank.NameAr} - @survey.CaseType.NameAr</title>
+</head>
+<body dir="rtl">
+	<div class="content">
+		<div class="container">
+			<div class="row align-items-stretch no-gutters contact-wrap">
+				<div class="col-md-12">
+					<div class="form h-100">
+						@if (numberOfLogos > 0)
+						{
+							<div class="row @(numberOfLogos == 1 ? "text-center" : "")">
+								<div class="col-@(numberOfLogos == 1 ? "12":"6")">
+									<div class="text-center">
+										@*@if (!string.IsNullOrWhiteSpace(survey.Logo1Url))
+											{
+												<img style="max-height:150px;max-width:150px;" src="@survey.Logo1Url" />
+												<h5 class="mt-3">@survey.Logo1Text</h5>
+											}*@
+											@if(survey.Bank !=null)
+										{
+											<img style="max-height:150px;max-width:150px;" src="@survey.Bank.Logo" alt="@survey.Bank.NameAr" />
+											<h5 class="mt-3">@survey.Bank.NameAr</h5>
+										}
+										else{
+											<h5 class="mt-3">لايوجد</h5>
+										}
+
+									</div>
+								</div>
+								@if (numberOfLogos > 1)
+								{
+									<div class="col-@(numberOfLogos == 1 ? "12":"6")">
+										<div class="text-center">
+											@*@if (!string.IsNullOrWhiteSpace(survey.Logo2Url))
+												{
+													<img style="max-height:150px;max-width:150px;" src="@survey.Logo2Url" />
+													<h5 class="mt-3">@survey.Logo2Text</h5>
+												}*@
+											<img style="max-height:150px;max-width:150px;" src="@company.Logo" alt="@company.NameAr" />
+											<h5 class="mt-3">@company.NameAr</h5>
+										</div>
+									</div>
+								}
+
+							</div>
+							<hr />
+						}
+						<h3 class="text-center">@survey.CaseType.NameAr</h3>
+						<p class="text-center">@survey.Description</p>
+						@if (survey.IsAcceptingResponses)
+						{
+							@using (Html.BeginForm("Respond", "Surveys", null, FormMethod.Post, false, new { @id = "formAdd", @class = "mb-5", enctype = "multipart/form-data" }))
+							{
+								<input type="text" hidden value="@survey.Id" name="SurveyId" />
+								<input type="text" hidden value="@Context.Request.Query["CaseId"]" name="CaseId" />
+								<input type="text" hidden value="@Context.Request.Query["UserId"]" name="UserId" />
+								if (company != null)
+								{
+									<input type="text" hidden value="@company.Id" name="companyId" />
+								}
+
+								int counter = 0;
+								foreach (var element in survey.Elements.Where(e => !e.IsDeleted).OrderBy(e => e.Order))
+								{
+									counter += 1;
+									<hr />
+									<div class="row text-right">
+										<div class="col-md-12 form-group">
+											<label for="element_@element.Id" class="col-form-label @(element.IsRequired ? "required" : "")">@counter) @element.Label</label>
+											@if (!string.IsNullOrWhiteSpace(element.Notes))
+											{
+												<small style="font-size:11px;">@element.Notes</small>
+											}
+
+											@if (element.IsCheckbox)
+											{
+												<br />
+												int Check = 0;
+												foreach (var item in element.Items.Where(e => !e.IsDeleted))
+												{
+													Check += 1;
+													<div>
+														<input value="@item.Id" name="Element_@element.Id" @(element.IsRequired && Check == 1 ? "checked" : "") type="checkbox" id="element_@element.Id">
+														<label for="element_@element.Id">@item.Text</label>
+													</div>
+												}
+												@*	<div>
+														<input name="Element_@element.Id" @(element.IsRequired ? "required" : "") value="true" type="checkbox" id="element_@element.Id">
+														<label for="element_@element.Id">@element.CheckBoxText</label>
+													</div>*@
+											}
+											else if (element.IsTextbox)
+											{
+												<input value="@(userResponse != null ? userResponse.FirstOrDefault(r => r.SurveyFormElementId == element.Id)?.Result : "")" name="Element_@element.Id" data-max-count="@element.TextboxMaxLength" data-min-count="@element.TextboxMinLength" @(element.IsRequired ? "required" : "") type="@(element.IsTextboxEmail ? "email" : element.IsTextboxPassword ? "password" : element.IsTextboxNumber ? "number" : "text")" class="form-control" id="element_@element.Id" placeholder="قم بكتابة الرد هنا" />
+												if (!element.IsTextboxNumber)
+												{
+													if (element.TextboxMinLength.HasValue)
+													{
+														<p class="text-danger" style="font-size:12px;">أقل عدد من الحروف للإجابة (15) حرف.</p>
+													}
+													if (element.TextboxMaxLength.HasValue)
+													{
+														<div id="the-count_element_@element.Id" class="the-count">
+															<span id="current_element_@element.Id">0</span>
+															<span id="maximum_element_@element.Id">/ @element.TextboxMaxLength</span>
+														</div>
+													}
+												}
+											}
+											else if (element.IsTextarea)
+											{
+												<textarea name="Element_@element.Id" data-max-count="@element.TextareaMaxLength" data-min-count="@element.TextboxMinLength" @(element.IsRequired ? "required" : "") class="form-control" id="element_@element.Id" cols="30" rows="4" maxlength="@(element.TextareaMaxLength.HasValue ? element.TextareaMaxLength.Value : "999999")" placeholder="قم بكتابة الرد هنا">
+													@(userResponse != null ? userResponse.FirstOrDefault(r => r.SurveyFormElementId == element.Id)?.Result : "")
+												</textarea>
+												if (element.TextareaMinLength.HasValue)
+												{
+													<p class="text-danger" style="font-size:12px;">أقل عدد من الحروف للإجابة (15) حرف.</p>
+												}
+												if (element.TextareaMaxLength.HasValue)
+												{
+													<div id="the-count_element_@element.Id" class="the-count">
+														<span id="current_element_@element.Id">0</span>
+														<span id="maximum_element_@element.Id">/ @element.TextareaMaxLength</span>
+													</div>
+												}
+											}
+											else if (element.IsRadioButton && element.Items.Count(e => !e.IsDeleted) > 0)
+											{
+												<br />
+												int radioNumber = 0;
+												foreach (var item in element.Items.Where(e => !e.IsDeleted))
+												{
+													radioNumber += 1;
+													<div>
+														<input value="@item.Id" name="Element_@element.Id" @(element.IsRequired && radioNumber == 1 ? "checked" : "") type="radio" id="element_@element.Id">
+														<label for="element_@element.Id">@item.Text</label>
+													</div>
+												}
+											}
+											else if (element.IsSelect && element.Items.Count(e => !e.IsDeleted) > 0)
+											{
+												<select name="Element_@element.Id" @(element.IsRequired ? "required" : "") class="form-control" id="element_@element.Id">
+													@if (!string.IsNullOrWhiteSpace(element.SelectBoxOptionText) && !element.IsRequired)
+													{
+														<option>@element.SelectBoxOptionText</option>
+													}
+													else
+													{
+														if (!element.IsRequired)
+														{
+															<option>اختر</option>
+														}
+													}
+
+													@foreach (var item in element.Items.Where(e => !e.IsDeleted))
+													{
+														<option @(userResponse != null && item.Text == userResponse.FirstOrDefault(r => r.SurveyFormElementId == element.Id)?.Result ? "selected" : "") value="@item.Id">@item.Text</option>
+													}
+												</select>
+											}
+											else if (element.IsDate)
+											{
+												<input value="@(userResponse != null ? userResponse.FirstOrDefault(r => r.SurveyFormElementId == element.Id)?.Result: "")" name="Element_@element.Id" @(element.IsRequired ? "required" : "") type="date" class="form-control" id="element_@element.Id" />
+											}
+											else if (element.IsFile)
+											{
+												element.FileAcceptedFileExtensions = element.FileAcceptedFileExtensions?.Replace(" ", "").Replace(".", "");
+												string acceptedEtensions = element.IsCamira ? "image/*" : !string.IsNullOrWhiteSpace(element.FileAcceptedFileExtensions) ? string.Join(',', element.FileAcceptedFileExtensions.Trim().Split(":").Where(e => !string.IsNullOrWhiteSpace(e)).Select(e => "." + e.Trim()).ToList()) : "";
+												<input name="Element_@element.Id" @(element.IsRequired || (element.FileNumberOfMinimumFilesAllowed.HasValue && element.FileNumberOfMinimumFilesAllowed.Value > 0) ? "required" : "") type="file" @((element.FileNumberOfMaximumFilesAllowed.HasValue && element.FileNumberOfMaximumFilesAllowed > 1) || (element.FileNumberOfMinimumFilesAllowed.HasValue && element.FileNumberOfMinimumFilesAllowed > 1) ? "multiple" : "") class="form-control" id="element_@element.Id" accept=@(!string.IsNullOrWhiteSpace(acceptedEtensions) ? acceptedEtensions : "*") @(element.IsCamira ? "capture" : "") />
+											}
+										</div>
+									</div>
+								}
+
+								<div class="row">
+									<div class="col-md-12 form-group">
+										<input type="submit" value="إرسال الرد" onclick="returnMobile()" class="btn btn-primary rounded-0 py-2 px-4 submit-btn">
+									</div>
+								</div>
+							}
+						}
+						else
+						{
+							<div class="alert alert-warning text-center">
+								عفواً ، هذا الإستعلام لم يعد يستقبل ردود جديدة
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<script src="~/survey-form/js/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+	<script src="~/survey-form/js/popper.min.js"></script>
+	<script src="~/survey-form/js/bootstrap.min.js"></script>
+	<script src="~/survey-form/js/jquery.validate.min.js"></script>
+	<script src="~/js/sweetalert/sweetalert.min.js"></script>
+	<script src="~/survey-form/js/main.js"></script>
+	<script>
+		function returnMobile() {
+			Android.returnMobile();
+			IOS.returnMobile();
+		}
+	</script>
+</body>
+</html>

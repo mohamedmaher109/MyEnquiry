@@ -1,0 +1,215 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+@{
+    ViewData["Title"] = "المستخدمين";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var roles = (List<RoleView>)ViewBag.Roles;
+    var banks = (List<SelectView>)ViewBag.Banks;
+    var companies = (List<SelectView>)ViewBag.Companies;
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/select2.css">
+
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-12">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">إضافة مستخدم</strong>
+                        </div>
+                        <div class="card-body">
+
+                            @using (Html.BeginForm("AddUser", "User", new { area = "" }, FormMethod.Post, true, new { @id = "formaddUser" }))
+                            {
+                                <h6 for="FirstName"> اختر نوع المستخدم</h6>
+                                <div class="form-row">
+
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            @Html.RadioButton("Usertype", 1, true, new { @id = "customRadio1", @type = "radio", @class = "custom-control-input " })
+                                            <label class="custom-control-label" for="customRadio1">بنوك</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            @Html.RadioButton("Usertype", 2, false, new { @id = "customRadio2", @type = "radio", @class = "custom-control-input" })
+
+                                            <label class="custom-control-label" for="customRadio2">شركات</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            @Html.RadioButton("Usertype", 3, false, new { @id = "customRadio3", @type = "radio", @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="customRadio3">مسئول النظام</label>
+                                        </div>
+                                    </div>     
+                                 @*<div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            @Html.RadioButton("Usertype", 5, false, new { @id = "customRadio4", @type = "radio", @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="customRadio4">أدمن</label>
+                                        </div>
+                                    </div>*@         
+
+
+
+
+                                </div>
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6 bankcol">
+                                        <label for="simple-select2">البنوك</label>
+                                        <select name="BankId" class="form-control select2 bankreq" id="simple-select2" width="100">
+                                            <option value="">اختر البنك</option>
+                                            @foreach (var item in banks)
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 companycol">
+                                        <label for="simple-select2">الشركات</label>
+                                        <select name="CompanyId" class="form-control select2 companyreq" id="simple-select2" width="100">
+                                            <option value="">اختر الشركة</option>
+                                            @foreach (var item in companies)
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label for="FullName">الاسم </label>
+                                    @Html.TextBox("FullName", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة اسم الستخدم " })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email">البريد الالكترونى</label>
+                                    @Html.TextBox("Email", "", new { @class = "form-control req", @type = "email", @placeholder = "برجاء كتابة البريد الالكترونى" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Phone"> رقم الهاتف (الواتس)</label>
+                                    @Html.TextBox("Phone", "", new { @class = "form-control req", @type = "text", @placeholder = "برجاء كتابة رقم الهاتف (الواتس)" })
+
+                                </div>
+                                <div class="form-group cashnum">
+                                    <label for="CashPhone">رقم فودافون كاش</label>
+                                    @Html.TextBox("CashPhone", "", new { @class = "form-control cashp", @type = "text", @placeholder = "برجاء كتابة فودافون كاش" })
+
+                                </div>                      
+                                <div class="form-group cashnum">
+                                    <label for="CashPhone">سعر الحاله</label>
+                                    @Html.TextBox("Price", "", new { @class = "form-control cashp", @type = "text", @placeholder = "برجاء كتابة سعر الحاله" })
+
+                                </div>
+
+
+
+                                <div class="form-group ">
+                                    <label for="simple-select2">المجموعات</label>
+                                    <select name="RoleId" class="form-control select2 req" id="simple-select2" width="100">
+                                        <option value="">اختر المجموعه</option>
+                                        @foreach (var item in roles)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div> <!-- form-group -->
+
+
+
+                                <div class="form-row">
+
+                                    <div class="form-group">
+                                        <label for="Password">كلمة المرور</label>
+                                        <div class="input-group">
+                                            @Html.TextBox("Password", "", new { @class = "form-control req", @type = "password", @placeholder = "برجاء كتابة كلمة المرور" })
+                                            <div class="input-group-append" onclick="myFunction()">
+                                                <div class="input-group-text"><span class="fe fe-eye fe-16"></span></div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmpassword">تأكيد كلمة المرور</label>
+                                        <div class="input-group">
+                                            @Html.TextBox("confirmpassword", "", new { @class = "form-control req", @type = "password", @placeholder = "برجاء تأكيد كلمة المرور " })
+                                            <div class="input-group-append" onclick="myFunction()">
+                                                <div class="input-group-text"><span class="fe fe-eye fe-16"></span></div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+                                <!-- form-row -->
+
+
+
+
+                                <button type="submit" class="btn btn-primary">اضافة</button>
+                            }
+
+
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">المستخدمين</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="dispalygrid">
+
+
+
+                            </div>
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+    </div>
+</div>
+
+<div class="disedit">
+
+</div>
+
+@section Scripts {
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+	<script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+	<script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+	<script src="~/js/sweetalert/sweetalert.min.js"></script>
+    <script src="~/js/cutompages/Users.js"></script>
+
+
+}

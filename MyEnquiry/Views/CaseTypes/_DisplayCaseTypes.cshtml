@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ICollection<MyEnquiry_DataLayer.Models.CaseTypes>
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>الاسم</th>
+          
+            <th>ملف الوورد</th>
+              <th>نشط</th>
+            <th>تعديل</th>
+            <th>حذف</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+           
+
+            <td>@item.NameAr</td>
+            <td> <a class="btn btn-link" href="@Url.Content(item.Word)" download>تحميل</a></td>
+            <td>
+                @if (item.Active == true)
+                {
+
+
+
+                    <label class="alert-info">نشط</label>
+                }
+                else
+                {
+                    <label class="alert-danger">غير نشط</label>
+
+                }
+
+            </td>
+
+            <td>
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary edittype">تعديل</button>
+
+            </td>
+            <td>
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger deletetype">حذف</button>
+
+            </td>
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+
+@{
+    var roles = (List<RoleView>)ViewBag.Roles;
+}
+@model UserView
+<!-- Modal -->
+<div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">تعديل المستخدم</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EditUser", "User", new { area = "" }, FormMethod.Post, true, new { @id = "formaEditUser" }))
+            {
+                <div class="modal-body">
+
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="FirstName">الاسم </label>
+                            @Html.TextBoxFor(m=>m.FullName, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم الستخدم " })
+
+                        </div>
+                        @*<div class="form-group">
+                            <label for="LastName">الاسم الاخير</label>
+                            @Html.TextBoxFor(m=>m.LastName, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم الستخدم الاخير" })
+
+                        </div>*@
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email">البريد الالكترونى</label>
+                        @Html.TextBoxFor(m=>m.Email, new { @class = "form-control reqE", @type = "email", @placeholder = "برجاء كتابة البريد الالكترونى" })
+
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">رقم الهاتف</label>
+                        @Html.TextBoxFor(m=>m.Phone, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة رقم الهاتف" })
+
+                    </div>
+
+                    @if (Model.Usertype == 2)
+                {
+                <div class="form-group">
+                    <label for="Phone">رقم فودافون كاش</label>
+                    @Html.TextBoxFor(m => m.CashPhone, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة رقم فودافون كاش" })
+
+                </div>
+                   <div class="form-group">
+                         <label for="CashPhone">سعر الحاله</label>
+               @Html.TextBoxFor(m => m.Price, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة سعر الحاله" })
+                </div>
+                }
+                    
+
+
+
+                    <div class="form-group ">
+                        <label for="RoleId">المجموعات</label>
+                        @Html.DropDownList("RoleId", new SelectList(roles, "Id", "Name"), "اختر المجموعه", new { @class = "form-control select2 reqE" , @id = "simple-select2" })
+
+                        @*<select name="RoleId" class="form-control select2 reqE" id="simple-select2" width="100">
+                            <option value="">اختر المجموعه</option>
+                            @foreach (var item in roles)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>*@
+                    </div> <!-- form-group -->
+
+
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

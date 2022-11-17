@@ -1,0 +1,42 @@
+﻿@model MyEnquiry_DataLayer.Models.Cities
+<!-- Modal -->
+<div class="modal fade"  id="EditRegionModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">تعديل المحافظه</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Edit", "Cities", new { area = "" }, FormMethod.Post, true, new { @id = "formaEdit" }))
+            {
+        <div class="modal-body">
+
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                <label for="inputAddress">اسم المحافظه باللغة العربية</label>
+                @Html.TextBoxFor(m => m.NameAr, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم المحافظه  باللغة العربية" })
+
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">اسم المحافظه باللغة الانجليزيه</label>
+                @Html.TextBoxFor(m => m.NameEn, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة اسم المحافظه باللغة الانجليزيه" })
+
+            </div>
+            <div class="form-group">
+                <label for="Active">نشط؟</label>
+                @Html.CheckBoxFor(m => m.Active)
+
+            </div>
+
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+
+@{
+    var banks = (List<SelectView>)ViewBag.Banks;
+
+}
+<!-- Modal -->
+<div class="modal fade" id="RefusedModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">ارسال الحالات المرفوضه الى البنوك</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("RefusedFile", "Cases", new { area = "" }, FormMethod.Post, true, new { @id = "formRefused" }))
+            {
+        <div class="modal-body">
+
+            <div class="form-row">
+
+                <div class="form-group col-md-12  ">
+                    <label for="simple-select2">البنوك</label>
+                    <select name="Bank" class="form-control select2" id="bankrefuse" width="100">
+                        <option value="">اختر البنك</option>
+                        @foreach (var item in banks)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group mb-3">
+                <label for="customFile">اختر شيت الاكسيل</label>
+                <div class="custom-file">
+                    <input type="file" name="file" accept=".xls, .xlsx" class="custom-file-input" id="excelfile">
+                    <label class="custom-file-label" for="customFile">شيت الاكسيل</label>
+                </div>
+            </div>
+
+
+        </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                <button type="submit" class="btn btn-primary">ارسال</button>
+            </div>
+        }
+        </div>
+    </div>
+</div>

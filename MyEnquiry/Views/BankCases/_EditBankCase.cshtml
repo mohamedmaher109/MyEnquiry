@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+
+@{
+    var companies = (List<SelectView>)ViewBag.Companies;
+    var casetypes = (List<SelectView>)ViewBag.CaseTypes;
+
+
+}
+@model MyEnquiry_DataLayer.Models.Cases
+<!-- Modal -->
+<div class="modal fade" id="EditBankCaseModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">تعديل الحالة من قبل البنك</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Edit", "BankCases", new { area = "" }, FormMethod.Post, true, new { @id = "formaEdit" }))
+            {
+        <div class="modal-body">
+
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group ">
+                <label for="CompanyId">أنواع الحالات</label>
+                @Html.DropDownList("CaseTypeId", new SelectList(casetypes, "Id", "Name"), "اختر نوع الحاله", new { @class = "form-control select2 reqE", @id = "simple-select2" })
+
+
+            </div>
+            <div class="form-group ">
+                <label for="CompanyId">الشركات</label>
+                @Html.DropDownList("CompanyId", new SelectList(companies, "Id", "Name"), "اختر الشركة", new { @class = "form-control select2 reqE", @id = "simple-select2" })
+
+
+            </div>
+            <div class="form-group mb-3">
+                <label for="customFile">شيت الاكسيل</label>
+                <div class="custom-file">
+                    @Html.TextBoxFor(m => m.File, new { @class = "custom-file-input", @type = "file", @accept = ".doc,.docx" })
+                    @*<input type="image" name="Logofile" class="custom-file-input" id="customFile">*@
+                    <label class="custom-file-label" for="Logofile">شيت الاكسيل</label>
+                </div>
+            </div>
+
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

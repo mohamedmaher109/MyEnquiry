@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ICollection<MyEnquiry_DataLayer.Models.Cases>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using MyEnquiry.Helper
+<table class="table table-responsive" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>رقم الحالة</th>
+            <th>نوع الحالة</th>
+            <th>اسم البنك</th>
+            <th>اسم العميل</th>
+            <th>رقم العميل</th>
+
+           
+            <th>محافظة السكن</th>
+            <th>عنوان السكن</th>
+
+            <th>حالة الحالة</th>
+
+            <th>رفض و ارسال الى اخر</th>
+            <th>مراجعة الحالة</th>
+            <th>قبول</th>
+            <th>تقييم المندوب</th>
+            <th>رفع الحاله للبنك</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+
+            <td>@item.Id</td>
+            <td>@(item.CaseType!=null?item.CaseType.NameAr:"غير معروف")</td>
+            <td>@(item.Bank!=null?item.Bank.NameAr:"غير معروف")</td>
+            <td>@item.ClientName</td>
+            <td>@item.ClientNumbers</td>
+     
+            <td>@item.HomeGovernorate</td>
+            <td>@item.HomeAddress</td>
+         
+
+            <td>
+                <label class="alert alert-success">@item.CaseStatus.NameAr</label>
+
+            </td>
+
+
+            <td>
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger sendcase">رفض و ارسال الى مندوب اخر</button>
+            </td>
+
+            <td>
+
+              <a  asp-action="GenerateResponseWordDocumentCase" asp-controller="SuperVisorCases" asp-route-id="@item.Id"   class="btn mb-2 btn-outline-warning">مراجعة الحالة</a>
+
+
+            </td>
+
+            <td>
+
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-success acceptcase">قبول الحالة</button>
+
+
+            </td>
+            <td>
+
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-warning rate">تقييم المراجع</button>
+
+            </td>
+                 <td>
+          <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-warning UploadfileToBank">رفع </button>
+
+         </td> 
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

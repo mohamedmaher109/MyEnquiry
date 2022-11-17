@@ -1,0 +1,47 @@
+﻿@model ICollection<MyEnquiry_BussniessLayer.ViewModels.BankCompanyVm>
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            
+            <th>المحافظه</th>
+            <th>نوع الحاله</th>
+            <th>سعر الحاله</th>
+      
+            
+
+            <th>تعديل</th>
+            <th>حذف</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+          @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td>@item.CaseTypesId</td>
+                    <td>@item.CitiesId</td>
+                    <td>@item.PriceCase</td>
+
+
+
+                    <td>
+                        <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary editbank">تعديل</button>
+
+                    </td> 
+                    <td>
+
+                        <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary delete">حذف</button>
+
+                    </td>
+
+                </tr>
+            }
+
+        }
+
+    </tbody>
+</table>

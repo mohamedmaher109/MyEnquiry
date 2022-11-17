@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تسجيل الدخول - استعلامى</title>
+    <link rel="stylesheet" href="~/dark-rtl/css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="~/dark-rtl/css/app-dark.css" id="darkTheme" disabled>
+
+</head>
+
+<body class="light rtl">
+
+    <div class="wrapper vh-100">
+        <div class="row align-items-center h-100">
+            @RenderBody()
+
+        </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="~/dark-rtl/js/jquery.min.js"></script>
+   
+    <script src="~/dark-rtl/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

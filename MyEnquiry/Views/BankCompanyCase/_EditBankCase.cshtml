@@ -1,0 +1,51 @@
+﻿@using MyEnquiry_BussniessLayer.ViewModel
+
+@{
+    var companies = (List<SelectView>)ViewBag.Companies;
+    var casetypes = (List<SelectView>)ViewBag.CaseTypes;
+
+
+}
+@model MyEnquiry_DataLayer.Models.BankCompany
+<!-- Modal -->
+<div class="modal fade" id="EditBankCaseModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">تعديل الحالة من قبل البنك</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Edit", "BankCompanyCase", new { area = "" }, FormMethod.Post, true, new { @id = "formaEdit" }))
+            {
+        <div class="modal-body">
+
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.CompaniesId)
+            @Html.HiddenFor(m => m.BanksId)
+            <div class="form-group ">
+                <label for="CompanyId">أنواع الحالات</label>
+                @Html.DropDownList("CaseTypesId", new SelectList(casetypes, "Id", "Name"), "اختر نوع الحاله", new { @class = "form-control select2 reqE", @id = "simple-select2" })
+
+
+            </div>
+            <div class="form-group ">
+                <label for="CompanyId">المحافظات</label>
+                @Html.DropDownList("CitiesId", new SelectList(companies, "Id", "Name"), "اختر الشركة", new { @class = "form-control select2 reqE", @id = "simple-select2" })
+            </div>
+             <div class="form-group">
+              <label for="inputAddress"> سعر الحاله</label>
+                @Html.TextBox("PriceCase", value:@Model.PriceCase, new { @class = "form-control reqE", @type = "text", @placeholder = "برجاء كتابة سعر الحاله"})
+                    </div>
+
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

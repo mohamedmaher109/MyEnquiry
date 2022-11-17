@@ -1,0 +1,307 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "المستخدمين";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+   
+
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/select2.css">
+
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-12">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">إضافة مندوب</strong>
+                        </div>
+                        <div class="card-body">
+
+                            @using (Html.BeginForm("Add", "Representative", new { enctype = "multipart/form-data" }, FormMethod.Post, true, new { @id = "formadd" }))
+                            {
+
+
+
+                                <div class="form-row">
+
+
+
+
+                                    <div class="form-group col-md-4 ">
+                                        <label for="FirstName">الاسم بالكامل</label>
+                                        @Html.TextBox("FullName", "", new { @class = "form-control req", @type = "text", @placeholder = " اسم المندوب" })
+
+                                    </div>
+                                    <div class="form-group col-md-4 ">
+                                        <label for="Email">البريد الالكترونى</label>
+                                        @Html.TextBox("Email", "", new { @class = "form-control req", @type = "email", @placeholder = " البريد الالكترونى" })
+
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">رقم الهاتف</label>
+                                        @Html.TextBox("Phone", "", new { @class = "form-control req", @type = "text", @placeholder = " رقم الهاتف" })
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">رقم فودافون كاش</label>
+                                        @Html.TextBox("CashPhone", "", new { @class = "form-control req", @type = "text", @placeholder = " رقم  فودافون كاش" })
+
+                                    </div>
+                                        <div class="form-group col-md-4 ">
+                                        <label for="simple-select2">المحافظات</label>
+                                        <select name="CitiyId" class="form-control select2 req" onchange="GetGovernment()" id="CitiyId" width="100" asp-items="@ViewBag.Cities">
+                                            <option value="@null">اختر المحافظه</option>
+                                           
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">المؤهل</label>
+                                        @Html.TextBox("Education", "", new { @class = "form-control req", @type = "text", @placeholder = " المؤهل" })
+
+                                    </div>
+
+
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">العنوان</label>
+                                        @Html.TextBox("Address", "", new { @class = "form-control req", @type = "text", @placeholder = " العنوان" })
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">العنوان بالتفصيل</label>
+                                        @Html.TextBox("AddressDetails", "", new { @class = "form-control req", @type = "text", @placeholder = " العنوان بالتفصيل" })
+
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">الرقم القومى</label>
+                                        @Html.TextBox("NationalId", "", new { @class = "form-control req", @type = "text", @placeholder = " الرقم القومى" })
+
+                                    </div>   
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">سعر الحاله</label>
+                                        @Html.TextBox("Price", "", new { @class = "form-control req", @type = "text", @placeholder = " سعر الحاله" })
+                                    </div>
+
+
+                                </div>
+                                <div class="form-row">
+
+                                    <div class="form-group mb-3 col-md-3">
+                                        <label for="NationalMediaFront">ادرج صورة البطاقة الامامية</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="NationalMediaFront" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="NationalMediaFront">
+                                            <label class="custom-file-label" for="NationalMediaFront">صورة البطاقة الامامية</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3 col-md-3">
+                                        <label for="NationalMediaBack">ادرج صورة البطاقة الخلفية</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="NationalMediaBack" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="NationalMediaBack" >
+                                            <label class="custom-file-label" for="NationalMediaBack">صورة البطاقة الخلفية</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3 col-md-3">
+                                        <label for="CriminalFish">ادرج صورة الفيش الجنائى</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="CriminalFish" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="CriminalFish">
+                                            <label class="custom-file-label" for="CriminalFish">صورة الفيش الجنائى</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3 col-md-3">
+                                        <label for="AcadimicQualification">ادرج صورة المؤهل</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="AcadimicQualification" accept="image/png, image/gif, image/jpeg" class="custom-file-input" id="AcadimicQualification">
+                                            <label class="custom-file-label" for="AcadimicQualification">صورة المؤهل</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="multi-select2">اختر على الاكثر 5 مناطق تغطية</label>
+                                        <select name="CoverageIds" class="form-control select2Coverage-multi" size="5" id="GovernmentId">
+                                            <option value="@null"> أختر المنطقه</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6  ">
+                                        <label for="simple-select2">الشركات</label>
+                                        <select name="CompanyId" class="form-control select2 req" id="simple-select2" width="100" asp-items="@ViewBag.Companies">
+                                            <option value="">اختر الشركة</option>
+                                          
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Password">كلمة المرور</label>
+                                        <div class="input-group">
+                                            @Html.TextBox("Password", "", new { @class = "form-control req", @type = "password", @placeholder = "برجاء كتابة كلمة المرور" })
+                                            <div class="input-group-append" onclick="myFunction()">
+                                                <div class="input-group-text"><span class="fe fe-eye fe-16"></span></div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="confirmpassword">تأكيد كلمة المرور</label>
+                                        <div class="input-group">
+                                            @Html.TextBox("confirmpassword", "", new { @class = "form-control req", @type = "password", @placeholder = "برجاء تأكيد كلمة المرور " })
+                                            <div class="input-group-append" onclick="myFunction()">
+                                                <div class="input-group-text"><span class="fe fe-eye fe-16"></span></div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-row ">
+
+
+                                    <div class="form-group text-center col-md-12">
+                                        <h4><span class="fe fe-arrow-down fe-16">--</span> شخص ما للإشارة إليه</h4>
+
+                                    </div>
+                                </div>
+                                
+
+                                <div class="form-row">
+
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">الاسم بالكامل</label>
+                                        @Html.TextBox("ReferFullName", "", new { @class = "form-control req", @type = "text", @placeholder = "الاسم بالكامل" })
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">رقم الهاتف</label>
+                                        @Html.TextBox("ReferPhoneNumber", "", new { @class = "form-control req", @type = "text", @placeholder = " رقم الهاتف" })
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="Phone">علاقة القرابة</label>
+                                        @Html.TextBox("ReferRelationShip", "", new { @class = "form-control req", @type = "text", @placeholder = " علاقة القرابة" })
+
+                                    </div>
+                                 
+                                </div>
+                                <div class="form-row">
+
+
+                                    
+                                    <div class="form-group col-md-12">
+                                        <label for="Phone">التفاصيل</label>
+                                        @Html.TextArea("ReferDescription", "", new { @class = "form-control req", @type = "text", @placeholder = "التفاصيل" })
+
+                                    </div>
+                                </div>
+
+
+
+                                <!-- form-row -->
+
+
+                        <div class="form-row ">
+                            <div class="form-group col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary ">اضافة</button>
+
+                            </div>
+
+                        </div>
+
+                            }
+
+
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+
+       
+
+    </div>
+</div>
+
+<div class="disedit">
+
+</div>
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+    <script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript">
+
+        $('.select2Coverage-multi').select2(
+            {
+                multiple: true,
+                theme: 'bootstrap4',
+                maximumSelectionLength: 5
+
+            });
+       
+    </script>
+    <script src="~/js/cutompages/Representative.js"></script>
+   <script>
+ $(document).ready(function () {
+           GetGovernment();
+  });
+        function GetGovernment() {
+            console.log("here");
+            var url = '@Url.Content("~/")' + "Representative/GetGovernment";
+            console.log(url);
+            var CitiyId = $("#CitiyId").val();
+            console.log(CitiyId);
+            $.getJSON(url, { id: CitiyId }, function (data) {
+                $("#GovernmentId").empty();
+                var item = '';
+                $.each(data, function (i, sub) {
+                    item += "<option value='" + sub.value + "'>" + sub.text + "</option>";
+                });
+                $("#GovernmentId").html(item);
+            });
+        }      
+                
+</script>
+
+
+}

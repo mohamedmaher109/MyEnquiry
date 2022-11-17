@@ -1,0 +1,39 @@
+﻿@model ICollection<MyEnquiry_BussniessLayer.ViewModels.DuiesBank>
+
+@using MyEnquiry.Helper
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>اسم الشركه</th>
+            <th></th>
+            <th></th>
+     
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.NameCompany</td>
+            <td>
+             <a type="button"  href="~/Dues/CompIndex2/@item.Id" data-id="@item.Id"   class="btn mb-2 btn-outline-primary">التفاصيل</a>
+            </td>
+            <td>
+             <form method="post"  action="Export" >
+                 <input hidden value="@item.Id" name="Id">
+                <button  class="btn mb-2 btn-outline-primary" type="submit"> التحميل</button>
+              </form>
+            </td>
+            <td>
+            <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary TotalComp">إجمالى للشركه</button>
+
+            </td>
+           
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

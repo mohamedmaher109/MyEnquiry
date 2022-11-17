@@ -1,0 +1,36 @@
+﻿@model ICollection<MyEnquiry_BussniessLayer.ViewModels.BankCompanyVm>
+<table class="table datatables" id="dataTable-pas">
+    <thead>
+        <tr>
+            
+            <th>المحافظه</th>
+            <th>نوع الحاله</th>
+            <th>سعر الحاله</th>
+      
+            
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td>@item.CaseTypesId</td>
+                    <td>@item.CitiesId</td>
+                    <td>@item.PriceCase</td>
+
+
+
+
+
+                </tr>
+            }
+
+        }
+
+    </tbody>
+</table>

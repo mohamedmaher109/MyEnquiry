@@ -1,0 +1,90 @@
+﻿@model MyEnquiry_DataLayer.Models.SurveyForm
+
+@{
+	ViewData["Title"] = "ردود " + Model.Bank.NameAr + " - " + Model.CaseType.NameAr;
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+	int loopingCounter = 0;
+}
+<div class="alert alert-info text-center">
+	إجمالى عدد الردود <strong>(@Model.Responses.GroupBy(r => r.GroupId).Count())</strong> رد
+</div>
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-lg-12">
+			@if (!Model.Responses.Any())
+			{
+				<div class="text-center mt-4">
+					<h2>لا يوجد ردود على هذا الإستعلام حتى الان</h2>
+				</div>
+			}
+			else
+			{
+				<div class="accordion" id="accordionExample">
+					@foreach (var groupedResponse in Model.Responses.OrderByDescending(r => r.CreatedAt).GroupBy(r => r.GroupId).ToList())
+					{
+						loopingCounter += 1;
+						var userName = groupedResponse.FirstOrDefault()?.User?.FullName;
+						var dateCreated = groupedResponse.FirstOrDefault()?.CreatedAt;
+						var company = groupedResponse.FirstOrDefault()?.Company;
+						if (!string.IsNullOrWhiteSpace(userName))
+						{
+							<div class="card">
+								<div class="card-header" id="heading_@loopingCounter">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse_@loopingCounter" aria-expanded="false" aria-controls="collapse_@loopingCounter">
+											@userName (إضغط هنا لمشاهدة الرد) (توقيت الرد: <span dir="ltr">@dateCreated.Value.ToString("dd-MMMM-yyyy hh:mm tt")</span>)
+										</button>
+										<a target="_blank" href="@Url.Action("GenerateResponseWordDocument", new { responseGroupId = groupedResponse.Key})" class="btn btn-primary btn-sm"><i class="fe fe-download"></i> تحميل التقرير</a>
+									</h5>
+								</div>
+								<div id="collapse_@loopingCounter" class="collapse" aria-labelledby="heading_@loopingCounter" data-parent="#accordionExample">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-3 font-weight-bold">الشركة:</div>
+											<div class="col-9">
+												@(company == null? "بدون شركة" : company.NameAr)
+											</div>
+										</div>
+										@foreach (var element in Model.Elements.Where(e => !e.IsDeleted).OrderBy(e => e.Order))
+										{
+											var response = groupedResponse.FirstOrDefault(r => r.SurveyFormElementId == element.Id);
+
+											<div class="row">
+												<div class="col-3 font-weight-bold">@element.Label:</div>
+												@if (response != null)
+												{
+													<div class="col-9">
+														@if (response.IsFile && !string.IsNullOrWhiteSpace(response.FileUrls))
+														{
+															var files = response.FileUrls.Split(":").ToList();
+															foreach (var fileUrl in files)
+															{
+																<div class="m-2">
+																	<img src="@fileUrl" style="max-width:350px; max-height:350px;" />
+																</div>
+															}
+														}
+														else
+														{
+															<p>@response.Result</p>
+														}
+													</div>
+												}
+												else
+												{
+													<p>لم يتم الرد على هذا السؤال</p>
+												}
+											</div>
+										}
+									</div>
+								</div>
+							</div>
+						}
+					}
+				</div>
+			}
+		</div>
+	</div>
+</div>
+

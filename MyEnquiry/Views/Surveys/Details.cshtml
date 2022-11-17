@@ -1,0 +1,127 @@
+﻿@model MyEnquiry_DataLayer.Models.SurveyForm
+
+@{
+	ViewData["Title"] = "تفاصيل الإستعلام";
+	//ViewData["Title"] = "تفاصيل " + Model.Name;
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-lg-12">
+			<div class="row" dir="rtl">
+				<div class="col-md-12">
+					<div class="card shadow mb-4">
+						@*<div class="card-header">
+								<div class="row">
+									<div class="col-12 text-center">
+										<strong class="card-title">@Model.Name</strong>
+									</div>
+								</div>
+							</div>*@
+						<div class="card-body">
+							<div class="row">
+								<div class="col-3 font-weight-bold">البنك:</div>
+								<div class="col-9">@Model.Bank.NameAr</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">الحالة:</div>
+								<div class="col-9">@Model.CaseType.NameAr</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">الوصف:</div>
+								<div class="col-9">@(string.IsNullOrWhiteSpace(Model.Description) ? "لا يوجد" : Model.Description)</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">هل الإستعلام يستقبل ردود جديدة:</div>
+								<div class="col-9">@(Model.IsAcceptingResponses ? "نعم" : "لا")</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">عدد الردود:</div>
+								<div class="col-9">@Model.Responses.Count()</div>
+							</div>
+							<hr />
+							@*<div class="row">
+								<div class="col-3 font-weight-bold">الشعار الأول:</div>
+								<div class="col-9">
+									@if (string.IsNullOrWhiteSpace(Model.Logo1Url))
+									{
+										<p>لا يوجد</p>
+									}
+									else
+									{
+										<img src="@Model.Logo1Url" style="max-height:400px;max-width:400px" />
+										<br />
+										<br />
+										<p>@Model.Logo1Text</p>
+										<br />
+										<a href="@Url.Action("DeleteLogo", new { surveyId = Model.Id, isFirst = true})" class="btn btn-danger">حذف الشعار</a>
+									}
+								</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">الشعار الثاني:</div>
+								<div class="col-9">
+									@if (string.IsNullOrWhiteSpace(Model.Logo2Url))
+									{
+										<p>لا يوجد</p>
+									}
+									else
+									{
+										<img src="@Model.Logo2Url" style="max-height:400px;max-width:400px" />
+										<br />
+										<br />
+										<p>@Model.Logo2Text</p>
+										<br />
+										<a href="@Url.Action("DeleteLogo", new { surveyId = Model.Id, isFirst = false})" class="btn btn-danger">حذف الشعار</a>
+									}
+								</div>
+							</div>
+							<hr />*@
+							<div class="row">
+								<div class="col-3 font-weight-bold">عدد العناصر:</div>
+								<div class="col-9">@Model.Elements.Count()</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">العناصر:</div>
+								<div class="col-9">
+									@if (Model.Elements.Any(e => !e.IsDeleted))
+									{
+										<ul>
+											@foreach (var element in Model.Elements.Where(e => !e.IsDeleted).OrderBy(e => e.Order))
+											{
+												<li style="list-style:none">@element.Order) @element.Label</li>
+											}
+										</ul>
+									}
+									else
+									{
+										<p>لم يتم إضافة عناصر بعد</p>
+									}
+									<p><a href="@Url.Action("Index", "SurveyElements", new { surveyId = Model.Id })">التحكم بالعناصر</a></p>
+								</div>
+							</div>
+							<hr />
+							<div class="row">
+								<div class="col-3 font-weight-bold">تاريخ إنشاء الإستعلام:</div>
+								<div class="col-9" dir="ltr">@Model.CreatedAt.ToString("dd-MMMM-yyyy hh:mm tt")</div>
+							</div>
+						</div> <!-- /. card-body -->
+					</div> <!-- /. card -->
+				</div> <!-- /. col -->
+			</div> <!-- /. end-section -->
+		</div>
+	</div>
+</div>
+
+<div>
+	@Html.ActionLink("العودة إلى الإستعلامات", "Index", "Surveys")
+</div>

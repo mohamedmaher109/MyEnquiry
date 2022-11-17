@@ -1,0 +1,43 @@
+﻿@model ICollection<MyEnquiry_DataLayer.Models.Cities>
+<table class="table datatables" id="dataTable-1">
+    <thead>
+        <tr>
+            <th>الاسم</th>
+            <th>نشط</th>
+            <th>تعديل</th>
+            <th>حذف</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.NameAr</td>
+            <td>
+                @if (item.Active == true)
+                {
+                    <label class="alert-info">نشط</label>
+                }
+                else
+                {
+                    <label class="alert-danger">غير نشط</label>
+
+                }
+
+            </td>
+
+            <td>
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-primary editregion">تعديل</button>
+
+            </td>
+            <td>
+                <button type="button" data-id="@item.Id" class="btn mb-2 btn-outline-danger deleteregion">حذف</button>
+
+            </td>
+        </tr>
+        }
+
+
+
+    </tbody>
+</table>

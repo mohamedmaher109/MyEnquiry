@@ -1,0 +1,221 @@
+﻿@model MyEnquiry_DataLayer.Models.SurveyForm
+
+@{
+	ViewData["Title"] = "عناصر الإستعلام: " + Model.Name;
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+	<a href="@Url.Action("Create", "SurveyElements", new { surveyId = Model.Id })" class="btn btn-outline-success"><i class="fe fe-plus"></i> إضافة عنصر جديد</a>
+</p>
+
+@if (Model.Elements.Count(e => !e.IsDeleted) <= 0)
+{
+	<div class="alert alert-info">
+		لا يوجد عناصر فى هذا الإستعلام
+	</div>
+}
+
+@foreach (var element in Model.Elements.Where(e => !e.IsDeleted).OrderBy(e => e.Order))
+{
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-lg-12">
+				<div class="row" dir="rtl">
+					<div class="col-md-12">
+						<div class="card shadow mb-4">
+							<div class="card-header">
+								<div class="row">
+									<div class="col-9">
+										<strong class="card-title">@element.Order) @element.Label</strong>
+									</div>
+									<div class="col-3 text-right">
+										<button type="button" data-id="@element.Id" class="btn btn-danger deleteElement"><i class="fe fe-delete"></i> حذف</button>
+										<a class="btn btn-primary" href="@Url.Action("Edit", "SurveyElements", new { elementId = element.Id })"><i class="fe fe-edit"></i> تعديل</a>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-3 font-weight-bold">الملاحظات:</div>
+									<div class="col-9">@(string.IsNullOrWhiteSpace(element.Notes) ? "لا يوجد" : element.Notes)</div>
+								</div>
+								<div class="row">
+									<div class="col-3 font-weight-bold">هل العنصر مطلوب:</div>
+									<div class="col-9">@(element.IsRequired ? "نعم" : "لا")</div>
+								</div>
+								<div class="row">
+									<div class="col-3 font-weight-bold">نوع العنصر:</div>
+									<div class="col-9">
+										@if (element.IsCheckbox)
+										{
+											<p>خانه إختيار (Checkbox) و اسم الاختيار هو (@element.CheckBoxText)</p>
+										}
+										else if (element.IsDate)
+										{
+											<p>حقل تاريخ (Date input)</p>
+										}
+										else if (element.IsFile)
+										{
+											@if (element.IsCamira)
+											{
+												<p>تصوير كاميرا</p>
+											}
+											else
+											{
+												<p>اختيار ملف (File input)</p>
+												<p>
+													الملفات المتاحة: <br />
+													@if (string.IsNullOrWhiteSpace(element.FileAcceptedFileExtensions))
+													{
+														<span>لم يتم تحديد نوع معين من الملفات</span>
+													}
+													else
+													{
+														var extensions = element.FileAcceptedFileExtensions.Split(":").ToList();
+														foreach (var ext in extensions)
+														{
+															<span>@ext</span>
+															<br />
+														}
+													}
+												</p>
+											}
+
+											<p>
+												الحد الأدنى من الملفات المطلوبة: @(element.FileNumberOfMinimumFilesAllowed.HasValue? element.FileNumberOfMinimumFilesAllowed.Value + " ملف" : "لم يتم التحديد")
+											</p>
+
+											<p>
+												الحد الأقصى من الملفات المطلوبة: @(element.FileNumberOfMaximumFilesAllowed.HasValue? element.FileNumberOfMaximumFilesAllowed.Value + " ملف" : "لم يتم التحديد")
+											</p>
+										}
+										else if (element.IsRadioButton)
+										{
+											<p>Radio button و الاختيارات هى: </p>
+											if (element.Items.Any())
+											{
+												<ul>
+													@foreach (var item in element.Items.Where(i => !i.IsDeleted))
+													{
+														<li>@item.Text</li>
+													}
+												</ul>
+											}
+											else
+											{
+												<span>لا يوجد اختيارات متاحة</span>
+											}
+										}
+										else if (element.IsSelect)
+										{
+											<p>اختيار من متعدد و الاختيارات هى: </p>
+											if (element.Items.Any())
+											{
+												<ul>
+													@foreach (var item in element.Items.Where(i => !i.IsDeleted))
+													{
+														<li>@item.Text</li>
+													}
+												</ul>
+											}
+											else
+											{
+												<span>لا يوجد اختيارات متاحة</span>
+											}
+											<p>النص الاختيارى: @(string.IsNullOrWhiteSpace(element.SelectBoxOptionText) ? "لا يوجد نص اختيارى" : element.SelectBoxOptionText)</p>
+										}
+										else if (element.IsTextarea)
+										{
+											<p>نص كبير (Textarea) و الحد الأقصى من الحروف هو (@(element.TextareaMaxLength.HasValue? element.TextareaMaxLength.Value + " حرف" : "لم يتم التحديد")) و الحد الأدنى من الحروف هو (@(element.TextareaMinLength.HasValue? element.TextareaMinLength.Value + " حرف" : "لم يتم التحديد"))</p>
+										}
+										else if (element.IsTextbox)
+										{
+											<p>نص صغير (Textbox)</p>
+											<p>
+												نوع النص:
+												@if (element.IsTextboxEmail)
+												{
+													<span>بريد إلكترونى</span>
+												}
+												else if (element.IsTextboxPassword)
+												{
+													<span>كلمه سر</span>
+												}
+												else if (element.IsTextboxNumber)
+												{
+													<span>أرقام فقط</span>
+												}
+												else
+												{
+													<span>نص حُر</span>
+												}
+											</p>
+											<p>الحد الأقصى من الحروف هو (@(element.TextboxMaxLength.HasValue? element.TextboxMaxLength.Value + " حرف" : "لم يتم التحديد")) و الحد الأدنى من الحروف هو (@(element.TextboxMinLength.HasValue? element.TextboxMinLength.Value + " حرف" : "لم يتم التحديد"))</p>
+										}
+									</div>
+								</div>
+							</div> <!-- /. card-body -->
+						</div> <!-- /. card -->
+					</div> <!-- /. col -->
+				</div> <!-- /. end-section -->
+			</div>
+		</div>
+	</div>
+}
+@section Scripts {
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+	<script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+	<script>
+		$(document).on("click", ".deleteElement", function () {
+			var id = $(this).data('id');
+			swal({
+				title: "هل انت متأكد?",
+				text: "لن تستطيع استعادة هذا العنصر مره اخرى",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "نعم احذفها !",
+				closeOnConfirm: false
+			}, function () {
+				$.ajax({
+					url: "/SurveyElements/Delete",
+					cache: false,
+					data: { 'Id': id },
+					success: function (res) {
+						swal({
+							title: "حذف العنصر",
+							text: res.msg,
+							type: "success",
+						});
+						delay(2000).then(() => window.location.reload());
+					}
+					, error: function (res) {
+						try {
+							swal({
+								title: "Error",
+								text: res.responseJSON.message,
+								type: "error"
+							});
+						} catch (e) {
+							swal({
+								title: "خطا",
+								text: "برجاء المحاولة مرة اخرى",
+								type: "error"
+							});
+						}
+					}
+				});
+			});
+		});
+
+		function delay(time) {
+			return new Promise(resolve => setTimeout(resolve, time));
+		}
+	</script>
+}

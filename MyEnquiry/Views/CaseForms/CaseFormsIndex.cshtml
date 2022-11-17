@@ -1,0 +1,109 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MyEnquiry_BussniessLayer.ViewModel
+
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var casetypes = (List<SelectView>)ViewBag.CaseTypes;
+
+}
+<link href="~/css/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="~/dark-rtl/css/dataTables.bootstrap4.css">
+<style>
+    #tblAppendGrid thead th {
+        color: #000000;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-12">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">اضافة تقرير الاستعلام </strong>
+                        </div>
+                        <div class="card-body">
+
+                            @using (Html.BeginForm("Add", "CaseForms", new { area = "" }, FormMethod.Post, true, new { @id = "formadd" }))
+                            {
+                                @Html.Hidden("Form")
+
+                                <div class="form-group col-md-12  ">
+                                    <label for="simple-select2">أنواع الحالات</label>
+                                    <select name="CaseTypeId" class="form-control select2 req" id="simple-select2" width="100">
+                                        <option value="">اختر نوع الحالة</option>
+                                        @foreach (var item in casetypes)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-12">
+                                        <div class="container-fluid">
+                                            <table id="tblAppendGrid"></table>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary">اضافة تقرير الاستعلام </button>
+                            }
+
+
+
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header">
+                            <strong class="card-title">تقارير إستعلام الحالات</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="dispalygrid">
+
+
+
+                            </div>
+                        </div> <!-- /. card-body -->
+                    </div> <!-- /. card -->
+                </div> <!-- /. col -->
+            </div> <!-- /. end-section -->
+
+        </div>
+
+    </div>
+</div>
+
+<div class="disedit">
+
+</div>
+
+@section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src='~/dark-rtl/js/jquery.dataTables.min.js'></script>
+    <script src='~/dark-rtl/js/dataTables.bootstrap4.min.js'></script>
+    <script src='~/js/AppendGrid.js'></script>
+
+    <script src="~/js/sweetalert/sweetalert.min.js"></script>
+
+    <script src="~/js/cutompages/CaseForms.js"></script>
+
+
+}
